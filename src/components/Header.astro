@@ -4,11 +4,12 @@ import { navigationItems } from '../data/navigation';
 
 interface Props {
   variant?: 'light' | 'dark';
+  transparent?: boolean;
 }
 
-const { variant = 'light' } = Astro.props;
+const { variant = 'light', transparent = false } = Astro.props;
 ---
-<header class={`site-header ${variant}`}>
+<header class={`site-header ${variant} ${transparent ? 'always-transparent' : ''}`}>
   <div class="header-inner">
     <!-- Desktop Left Logo -->
     <div class="header-left desktop-only">
@@ -28,6 +29,7 @@ const { variant = 'light' } = Astro.props;
         <span class="menu-line"></span>
         <span class="menu-line"></span>
       </button>
+      <Logo variant={variant} class="mobile-header-logo" />
     </div>
 
     <!-- Desktop Right Navigation -->
@@ -99,6 +101,14 @@ const { variant = 'light' } = Astro.props;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(197, 168, 108, 0.18);
+  }
+
+  .site-header.always-transparent,
+  .site-header.always-transparent.is-scrolled {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px solid transparent !important;
   }
 
   .header-inner {
@@ -199,7 +209,7 @@ const { variant = 'light' } = Astro.props;
     }
 
     .site-header {
-      padding: max(1.25rem, env(safe-area-inset-top)) 1.5rem 0.5rem;
+      padding: max(6dvh, env(safe-area-inset-top)) 1.5rem 0.5rem;
     }
 
     .header-inner {
@@ -207,21 +217,28 @@ const { variant = 'light' } = Astro.props;
     }
 
     .mobile-top-center {
+      position: relative;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       pointer-events: auto;
+      min-height: 44px;
     }
 
+    /* Hamburger pinned left vertically aligned with logo center */
     .mobile-menu-trigger {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      gap: 4px;
-      width: 48px;
-      height: 48px;
+      align-items: flex-start;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
       padding: 0;
       background: transparent;
       border: none;
@@ -231,13 +248,26 @@ const { variant = 'light' } = Astro.props;
       touch-action: manipulation;
     }
 
+    .mobile-top-center :global(.mobile-header-logo .logo-svg) {
+      width: clamp(140px, 40vw, 170px);
+    }
+
     .menu-line {
       display: block;
-      width: 32px;
-      height: 1.2px;
-      background-color: #cbb27a;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      width: 24px;
+      height: 1.3px;
+      border-radius: 1px;
+      background-color: #ffffff;
+      transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
       pointer-events: none;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+    }
+
+    /* On light / parchment transparent headers, ensure dark visible lines */
+    .site-header.always-transparent .menu-line,
+    .site-header.dark .menu-line {
+      background-color: #141414;
+      filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.5));
     }
   }
 
@@ -402,5 +432,4 @@ const { variant = 'light' } = Astro.props;
   } else {
     setupMobileMenu();
   }
-  document.addEventListener('astro:page-load', setupMobileMenu);
 </script>

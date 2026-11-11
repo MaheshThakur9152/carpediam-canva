@@ -14,7 +14,7 @@ import { heroSlides } from '../data/heroSlides';
     ))}
   </div>
 
-  <CarouselControls totalSlides={heroSlides.length} />
+  <CarouselControls />
 </section>
 
 <style>
@@ -251,5 +251,4 @@ import { heroSlides } from '../data/heroSlides';
   } else {
     setupCarousel();
   }
-  document.addEventListener('astro:page-load', setupCarousel);
 </script>

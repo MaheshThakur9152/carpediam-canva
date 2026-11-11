@@ -49,7 +49,8 @@ const { variant = 'light', class: className = '' } = Astro.props;
     fill: #ffffff;
   }
   .logo-link.light .logo-bombay path {
-    fill: var(--color-gold);
+    fill: #ffffff;
+    opacity: 0.9;
   }
   /* Dark theme for light pages */
   .logo-link.dark .logo-carpediam path {
@@ -61,7 +62,7 @@ const { variant = 'light', class: className = '' } = Astro.props;
 
   @media (max-width: 768px) {
     .logo-svg {
-      width: clamp(96px, 25vw, 120px);
+      width: clamp(140px, 38vw, 175px);
     }
   }
 </style>

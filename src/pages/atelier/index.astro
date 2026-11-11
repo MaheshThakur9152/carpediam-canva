@@ -1,174 +1,210 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="The Atelier — CARPE DIAM BOMBAY">
+<BaseLayout 
+  title="Atelier — CARPE DIAM BOMBAY"
+  showFooter={false}
+  isSinglePage={true}
+  headerVariant="light"
+  headerTransparent={true}
+>
   <div class="atelier-page">
-    <div class="atelier-hero">
-      <div 
-        class="atelier-hero-bg cinematic-image-wrapper" 
-        data-reveal-image 
-        data-parallax-image
-      >
-        <img src="/Homepage-1.avif" alt="Atelier Landscape" class="hero-image" />
-      </div>
-      <div class="hero-text-overlay stagger-text-group" data-reveal-text-group>
-        <span class="eyebrow editorial-reveal-item" data-reveal-item>The Atelier</span>
-        <h1 class="editorial-reveal-item" data-reveal-item>Bombay Heritage</h1>
-      </div>
+    <div class="atelier-split">
+      <!-- Left / Top Column: #C7B89D editorial statement -->
+      <section class="atelier-pane atelier-content">
+        <div class="atelier-copy-wrap">
+          <span class="atelier-eyebrow">Atelier</span>
+          <h1 class="atelier-heading">
+            Carpe Diam was born from a shared perspective on design, craftsmanship, and contemporary fine jewelry.
+          </h1>
+          <p class="atelier-body">
+            Founded by <strong>Joohi and Rushabh</strong>, Carpe Diam brings together artistic vision and international jewelry expertise to create pieces that balance contemporary design with Indian sensibilities, thoughtful in form and precise in craftsmanship.
+          </p>
+        </div>
+      </section>
+
+      <!-- Right / Bottom Column: Craftsman image -->
+      <section class="atelier-pane atelier-media">
+        <img 
+          src="/atlier.jpg" 
+          alt="Carpe Diam Atelier Craftsmanship" 
+          class="atelier-img" 
+          loading="eager"
+          decoding="async"
+        />
+      </section>
     </div>
-
-    <section class="atelier-body">
-      <div class="content-wrapper">
-        <div class="prose-section editorial-section-reveal" data-reveal-section>
-          <h2>The Art of Polki & Carved Gems</h2>
-          <p>
-            Rooted in the coastal tapestry and grand artistic traditions of Bombay, Carpe Diam breathes renewed modern life into royal Indian jewelcraft.
-          </p>
-          <p>
-            Every jewel begins with character: uncut diamonds that retain their organic geometry, juxtaposed against hand-carved tanzanite and luscious Colombian-origin emeralds. Our goldsmiths fashion each bezel by hand in 14kt gold, creating pieces of tactile gravity and timeless romance.
-          </p>
-        </div>
-
-        <div class="craft-details-grid" data-editorial-gallery>
-          <div class="craft-item editorial-gallery-item">
-            <h3>Provenance</h3>
-            <p>Ethically sourced stones, individually selected for fire, inclusions, and depth of color.</p>
-          </div>
-          <div class="craft-item editorial-gallery-item">
-            <h3>Hand Enameling</h3>
-            <p>Meenakari and miniature lacework fused at high temperatures to preserve brilliant floral hues.</p>
-          </div>
-          <div class="craft-item editorial-gallery-item">
-            <h3>Bespoke Commission</h3>
-            <p>One-of-a-kind heirlooms tailored to the collector's personal narrative and proportions.</p>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 </BaseLayout>
 
 <style>
   .atelier-page {
-    background-color: var(--color-bg-dark);
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden !important;
+    background-color: #C7B89D;
+    position: fixed;
+    inset: 0;
   }
 
-  .atelier-hero {
+  .atelier-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    width: 100%;
+    overflow: hidden !important;
+  }
+
+  .atelier-pane {
     position: relative;
-    height: 68vh;
-    min-height: 480px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  /* Left Editorial Content */
+  .atelier-content {
+    background-color: #C7B89D;
     display: flex;
-    align-items: flex-end;
-    padding: clamp(3rem, 6vh, 5.5rem) var(--spacing-header-x);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: clamp(6.5rem, 14vh, 10rem) clamp(2.5rem, 6vw, 6.5rem) clamp(3.5rem, 8vh, 6rem);
+    box-sizing: border-box;
     overflow: hidden;
   }
 
-  .atelier-hero-bg {
-    position: absolute;
-    inset: 0;
+  .atelier-copy-wrap {
+    max-width: 580px;
     width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
-  .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.6);
+  .atelier-eyebrow {
+    font-family: var(--font-primary, "Amiri", serif);
+    font-style: italic;
+    font-size: clamp(1.2rem, 1.45vw, 1.55rem);
+    color: #ffffff;
+    opacity: 0.95;
+    margin-bottom: clamp(1.5rem, 3.2vh, 2.5rem);
+    display: inline-block;
+    letter-spacing: 0.02em;
   }
 
-  .hero-text-overlay {
-    position: relative;
-    z-index: 2;
-  }
-
-  .eyebrow {
-    display: block;
-    font-size: 0.9rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    margin-bottom: 0.6rem;
-  }
-
-  .hero-text-overlay h1 {
-    font-size: clamp(2.5rem, 5.2vw, 4.6rem);
-    letter-spacing: 0.08em;
-    color: var(--color-text-white);
+  .atelier-heading {
+    font-family: var(--font-primary, "Amiri", serif);
+    font-weight: 700;
+    font-size: clamp(1.85rem, 2.8vw, 3rem);
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    text-transform: none;
+    margin: 0 0 clamp(1.8rem, 3.8vh, 3rem) 0;
   }
 
   .atelier-body {
-    padding: clamp(4rem, 8vw, 7.5rem) var(--spacing-header-x);
-  }
-
-  .content-wrapper {
-    max-width: 920px;
-    margin: 0 auto;
-  }
-
-  .prose-section {
-    margin-bottom: clamp(3.5rem, 6vw, 5rem);
-  }
-
-  .prose-section h2 {
-    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-    letter-spacing: 0.08em;
-    color: var(--color-gold-light);
-    margin-bottom: 1.6rem;
-  }
-
-  .prose-section p {
-    font-size: clamp(1.1rem, 1.25vw, 1.25rem);
-    color: var(--color-text-muted);
-    line-height: 1.85;
-    margin-bottom: 1.6rem;
+    font-family: var(--font-primary, "Amiri", serif);
+    font-weight: 400;
+    font-size: clamp(1.08rem, 1.3vw, 1.32rem);
+    line-height: 1.68;
+    color: #ffffff;
+    opacity: 0.95;
+    margin: 0;
     letter-spacing: 0.02em;
   }
 
-  .craft-details-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: clamp(2rem, 3.5vw, 3rem);
-    border-top: 1px solid var(--color-border-subtle);
-    padding-top: clamp(2.5rem, 4vw, 3.5rem);
+  .atelier-body strong {
+    font-weight: 700;
+    color: #ffffff;
+    opacity: 1;
   }
 
-  .craft-item {
-    transition: transform 0.35s var(--ease-luxury);
+  /* Right Media */
+  .atelier-media {
+    overflow: hidden;
+    background-color: #111111;
   }
 
-  .craft-item:hover {
-    transform: translateY(-3px);
+  .atelier-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
-  .craft-item h3 {
-    font-size: 1.2rem;
-    letter-spacing: 0.1em;
-    color: var(--color-gold);
-    margin-bottom: 0.75rem;
+  /* Mobile & Tablet: Strict Single-Page 2-Row Split (Zero Scroll) */
+  @media (max-width: 900px) {
+    .atelier-page {
+      overflow: hidden !important;
+      position: fixed;
+      inset: 0;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    .atelier-split {
+      grid-template-columns: 1fr;
+      grid-template-rows: 56% 44%;
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden !important;
+    }
+
+    .atelier-content {
+      padding: max(3.8rem, calc(env(safe-area-inset-top) + 3rem)) 1.25rem 1rem;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .atelier-copy-wrap {
+      max-width: 100%;
+    }
+
+    .atelier-eyebrow {
+      font-size: 0.95rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .atelier-heading {
+      font-size: clamp(1.05rem, 4.4vw, 1.35rem);
+      line-height: 1.22;
+      margin-bottom: 0.55rem;
+    }
+
+    .atelier-body {
+      font-size: clamp(0.78rem, 2.7vw, 0.88rem);
+      line-height: 1.4;
+    }
+
+    .atelier-media {
+      height: 100%;
+      min-height: 0;
+    }
   }
 
-  .craft-item p {
-    font-size: 1.02rem;
-    color: var(--color-text-muted);
-    line-height: 1.7;
-    letter-spacing: 0.02em;
-  }
-
-  @media (max-width: 768px) {
-    .atelier-hero {
-      padding: 3rem 1.25rem;
-      min-height: 400px;
+  @media (max-height: 600px) and (max-width: 900px) {
+    .atelier-split {
+      grid-template-rows: 60% 40%;
+    }
+    .atelier-content {
+      padding-top: 3.2rem;
+    }
+    .atelier-heading {
+      font-size: 1rem;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
     }
     .atelier-body {
-      padding: 3rem 1.25rem 4rem;
-    }
-    .prose-section {
-      margin-bottom: 2.5rem;
-    }
-    .craft-details-grid {
-      gap: 2rem;
+      font-size: 0.75rem;
+      line-height: 1.3;
     }
   }
 </style>

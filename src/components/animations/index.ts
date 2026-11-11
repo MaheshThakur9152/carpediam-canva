@@ -32,5 +32,4 @@ if (typeof window !== 'undefined') {
   } else {
     initAnimations();
   }
-  document.addEventListener('astro:page-load', initAnimations);
 }

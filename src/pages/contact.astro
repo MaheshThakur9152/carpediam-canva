@@ -1,279 +1,279 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Contact & Appointments — CARPE DIAM BOMBAY">
+
+<BaseLayout 
+  title="Contact — CARPE DIAM BOMBAY"
+  description="From the first thought to the final detail, let's create something together. Private commissions and atelier inquiries."
+  headerVariant="light"
+  headerTransparent={true}
+  showFooter={false}
+>
   <div class="contact-page">
     <div class="contact-container">
-      <header class="contact-header stagger-text-group" data-reveal-text-group>
-        <span class="eyebrow editorial-reveal-item" data-reveal-item>Private Concierge</span>
-        <h1 class="editorial-reveal-item" data-reveal-item>Appointments & Inquiries</h1>
-        <p class="contact-intro editorial-reveal-item" data-reveal-item>
-          We invite you to experience our collections in person at our Bombay atelier or initiate a bespoke commission.
-        </p>
-      </header>
+      <!-- Left Statement -->
+      <div class="contact-left">
+        <h1 class="contact-statement">
+          From the first thought to the<br />
+          final detail, let's create<br />
+          something together.
+        </h1>
+      </div>
 
-      <div class="contact-content-grid editorial-section-reveal" data-reveal-section>
-        <div class="contact-info">
-          <div class="info-block">
-            <h3>The Bombay Atelier</h3>
-            <p>Carpe Diam High Jewellery</p>
-            <p>506 93 East, Mahakali Caves Rd</p>
-            <p>Shanti Nagar, Andheri East</p>
-            <p>Mumbai, Maharashtra 400093</p>
+      <!-- Right Form -->
+      <div class="contact-right">
+        <!-- Static site: Formspree receives the POST and emails it. Replace YOUR_FORM_ID with the ID from formspree.io -->
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <input type="hidden" name="inquiry" id="inquiry-field" />
+          <!-- Row 1: Name Fields -->
+          <div class="form-row-two">
+            <div class="form-field">
+              <label for="first-name">FIRST NAME*</label>
+              <input type="text" id="first-name" name="firstName" required autocomplete="given-name" />
+            </div>
+            <div class="form-field">
+              <label for="last-name">LAST NAME*</label>
+              <input type="text" id="last-name" name="lastName" required autocomplete="family-name" />
+            </div>
           </div>
 
-          <div class="info-block">
-            <h3>Private Viewings</h3>
-            <p>Monday — Saturday</p>
-            <p>11:00 AM — 7:00 PM IST</p>
-            <p class="subtle-note">Strictly by prior confirmation</p>
+          <!-- Row 2: Email -->
+          <div class="form-field">
+            <label for="email">EMAIL*</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
           </div>
 
-          <div class="info-block">
-            <h3>Direct Liaison</h3>
-            <p>concierge@carpediam.com</p>
-            <p>+91 (022) 2284 9000</p>
+          <!-- Row 3: Phone -->
+          <div class="form-field">
+            <label for="phone">PHONE*</label>
+            <input type="tel" id="phone" name="phone" required autocomplete="tel" />
           </div>
-        </div>
 
-        <div class="contact-form-wrapper">
-          <form class="appointment-form">
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" name="name" required placeholder="Lady / Gentleman" />
-            </div>
+          <!-- Row 4: Message -->
+          <div class="form-field">
+            <label for="message">MESSAGE*</label>
+            <input type="text" id="message" name="message" required />
+          </div>
 
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" required placeholder="client@example.com" />
-            </div>
+          <!-- Row 5: Community Checkbox -->
+          <div class="form-checkbox-row">
+            <label class="checkbox-container">
+              <input type="checkbox" name="joinCommunity" id="join-community" checked />
+              <span class="custom-checkmark" aria-hidden="true"></span>
+              <span class="checkbox-label">Join our community</span>
+            </label>
+          </div>
 
-            <div class="form-group">
-              <label for="interest">Area of Interest</label>
-              <select id="interest" name="interest">
-                <option value="appointment">Private Atelier Appointment</option>
-                <option value="bespoke">Bespoke Commission</option>
-                <option value="polki">Polki & High Jewellery Inquiries</option>
-                <option value="other">General Inquiry</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="4" placeholder="Your inquiry or desired appointment date..."></textarea>
-            </div>
-
-            <button type="submit" class="submit-btn">Request Viewing</button>
-          </form>
-        </div>
+          <!-- Row 6: Submit Button -->
+          <div class="form-submit-row">
+            <button type="submit" class="submit-btn" id="submit-btn">
+              SUBMIT
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-
-  <script>
-    function setupContactForm() {
-      const params = new URLSearchParams(window.location.search);
-      const inquiry = params.get('inquiry');
-      const msg = document.getElementById('message') as HTMLTextAreaElement | null;
-      const interest = document.getElementById('interest') as HTMLSelectElement | null;
-      if (inquiry && interest) interest.value = 'appointment';
-      if (inquiry && msg && !msg.value) {
-        const formatted = inquiry.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
-        msg.value = `I am interested in requesting a private viewing of ${formatted}.`;
-      }
-
-      const form = document.querySelector('.appointment-form') as HTMLFormElement | null;
-      if (!form || form.dataset.bound) return;
-      form.dataset.bound = 'true';
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const data = new FormData(form);
-        const name = (data.get('name') as string) || '';
-        const email = (data.get('email') as string) || '';
-        const area = (data.get('interest') as string) || '';
-        const note = (data.get('message') as string) || '';
-
-        const subject = encodeURIComponent(`Private Viewing Request: ${name}`);
-        const body = encodeURIComponent(
-          `Client: ${name}\nEmail: ${email}\nInterest: ${area}\n\nInquiry Details:\n${note}`
-        );
-        window.location.href = `mailto:concierge@carpediam.com?subject=${subject}&body=${body}`;
-      });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupContactForm);
-    } else {
-      setupContactForm();
-    }
-    document.addEventListener('astro:page-load', setupContactForm);
-  </script>
 </BaseLayout>
+
+<script>
+  // Product page links here with ?inquiry=<slug>; pass it along with the enquiry
+  const inquiry = new URLSearchParams(location.search).get('inquiry');
+  const field = document.getElementById('inquiry-field') as HTMLInputElement | null;
+  if (inquiry && field) field.value = inquiry;
+</script>
 
 <style>
   .contact-page {
-    padding: clamp(7rem, 12vh, 10rem) var(--spacing-header-x) clamp(4rem, 8vw, 7rem);
-    background-color: var(--color-bg-dark);
     width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-image: url('/contact-bg.avif');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    padding: clamp(6.5rem, 14vh, 9rem) clamp(2rem, 6vw, 6.5rem) clamp(3.5rem, 8vh, 5.5rem);
     box-sizing: border-box;
+    font-family: var(--font-primary, "Amiri", serif);
   }
 
   .contact-container {
-    max-width: 1100px;
+    max-width: 1260px;
     width: 100%;
     margin: 0 auto;
-    box-sizing: border-box;
-  }
-
-  .contact-header {
-    text-align: center;
-    max-width: 650px;
-    margin: 0 auto clamp(3rem, 5vw, 4.5rem);
-  }
-
-  .eyebrow {
-    font-size: 0.95rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    display: block;
-    margin-bottom: 0.8rem;
-  }
-
-  .contact-header h1 {
-    font-size: clamp(2rem, 3.8vw, 3.4rem);
-    color: var(--color-text-white);
-    margin-bottom: 1.2rem;
-  }
-
-  .contact-intro {
-    font-size: 1.15rem;
-    color: var(--color-text-muted);
-    line-height: 1.8;
-  }
-
-  .contact-content-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: clamp(2.5rem, 5vw, 5rem);
-    border-top: 1px solid var(--color-border-subtle);
-    padding-top: clamp(2.5rem, 4vw, 4rem);
-    width: 100%;
-    box-sizing: border-box;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 6.5rem);
+    align-items: center;
   }
 
-  .contact-info {
+  /* Left Editorial Statement */
+  .contact-left {
     display: flex;
     flex-direction: column;
-    gap: 2.2rem;
+    justify-content: center;
   }
 
-  .info-block h3 {
-    font-size: 1.25rem;
-    color: var(--color-gold-light);
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.1em;
+  .contact-statement {
+    font-family: var(--font-primary, "Amiri", serif);
+    font-weight: 400;
+    font-size: clamp(1.85rem, 2.7vw, 2.9rem);
+    line-height: 1.32;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    text-transform: none;
+    margin: 0;
   }
 
-  .info-block p {
-    font-size: 1.05rem;
-    color: var(--color-text-muted);
-    line-height: 1.7;
-  }
-
-  .subtle-note {
-    font-style: italic;
-    color: var(--color-gold-muted) !important;
-  }
-
-  .contact-form-wrapper {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .appointment-form {
+  /* Right Luxury Form */
+  .contact-right {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
-    background-color: var(--color-bg-darker);
-    padding: clamp(1.5rem, 3.5vw, 2.8rem);
-    border: 1px solid var(--color-border-subtle);
+    justify-content: center;
     width: 100%;
-    box-sizing: border-box;
+    max-width: 520px;
   }
 
-  .form-group {
+  .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: clamp(1.5rem, 2.6vh, 2.2rem);
     width: 100%;
-    box-sizing: border-box;
   }
 
-  .form-group label {
-    font-size: 0.95rem;
-    letter-spacing: 0.1em;
+  .form-row-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-field label {
+    font-family: var(--font-primary, "Amiri", serif);
+    font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-gold-light);
+    color: #ffffff;
+    margin-bottom: 0.35rem;
   }
 
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    background-color: #0b1a18;
-    border: 1px solid rgba(197, 168, 108, 0.3);
-    color: var(--color-text-white);
-    padding: 0.85rem 1rem;
-    font-size: 1.05rem;
-    border-radius: 0;
+  .form-field input {
     width: 100%;
-    max-width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+    color: #ffffff;
+    font-family: var(--font-primary, "Amiri", serif);
+    font-size: 1.1rem;
+    padding: 0.35rem 0 0.55rem;
     box-sizing: border-box;
-    transition: border-color 0.3s ease;
+    outline: none;
+    transition: border-bottom-color 0.3s ease;
   }
 
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-gold);
+  .form-field input:focus {
+    border-bottom-color: var(--color-gold, #c5a86c);
+  }
+
+  /* Custom Square Checkbox */
+  .form-checkbox-row {
+    margin-top: 0.3rem;
+  }
+
+  .checkbox-container {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+  }
+
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .custom-checkmark {
+    height: 18px;
+    width: 18px;
+    background-color: #c7b89d;
+    display: inline-block;
+    flex-shrink: 0;
+    border-radius: 2px;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+  }
+
+  .checkbox-container input:not(:checked) ~ .custom-checkmark {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .checkbox-label {
+    font-family: var(--font-primary, "Amiri", serif);
+    font-size: clamp(0.95rem, 1.05vw, 1.08rem);
+    color: #ffffff;
+    opacity: 0.95;
+    margin-left: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Submit Button */
+  .form-submit-row {
+    margin-top: 0.8rem;
   }
 
   .submit-btn {
-    margin-top: 0.5rem;
-    background-color: var(--color-gold);
-    color: #06110f;
-    font-size: 1.02rem;
-    font-weight: 400;
-    letter-spacing: 0.18em;
+    background: transparent;
+    border: none;
+    padding: 0.4rem 0;
+    font-family: var(--font-primary, "Amiri", serif);
+    font-size: clamp(1.05rem, 1.2vw, 1.22rem);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 1.1rem 2rem;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color 0.35s var(--ease-luxury), transform 0.25s var(--ease-luxury), box-shadow 0.35s var(--ease-luxury);
+    color: #ffffff;
     cursor: pointer;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    transition: color 0.3s ease, opacity 0.3s ease;
   }
 
   .submit-btn:hover {
-    background-color: var(--color-gold-light);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(197, 168, 108, 0.22);
+    color: var(--color-gold, #c5a86c);
   }
 
-  @media (max-width: 768px) {
+  /* Responsive Behavior */
+  @media (max-width: 900px) {
     .contact-page {
-      padding: 5.5rem 1.25rem 3.5rem;
+      padding: 6.5rem 1.5rem 4rem;
+      align-items: flex-start;
+      min-height: 100vh;
     }
 
-    .contact-content-grid {
+    .contact-container {
       grid-template-columns: 1fr;
-      gap: 2.5rem;
+      gap: 2.8rem;
     }
 
-    .appointment-form {
-      padding: 1.4rem 1.1rem;
+    .contact-statement {
+      font-size: 1.65rem;
+      line-height: 1.3;
+    }
+
+    .contact-right {
+      max-width: 100%;
+    }
+
+    .form-row-two {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
     }
   }
 </style>

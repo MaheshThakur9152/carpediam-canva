@@ -8,20 +8,24 @@ interface Props {
   title?: string;
   description?: string;
   headerVariant?: 'light' | 'dark';
+  headerTransparent?: boolean;
   showFooter?: boolean;
   isHome?: boolean;
+  isSinglePage?: boolean;
 }
 
 const {
   title = 'CARPE DIAM BOMBAY — High Jewellery Atelier',
   description = 'Carpe Diam Bombay. Exceptional handcrafted high jewellery, uncut polki diamonds, carved gemstones and bespoke heirlooms in 14kt gold.',
   headerVariant = 'light',
+  headerTransparent = false,
   showFooter = true,
-  isHome = false
+  isHome = false,
+  isSinglePage = false
 } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="en" class={isHome ? 'is-home-page' : ''}>
+<html lang="en" class={isHome || isSinglePage ? 'is-home-page' : ''}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -40,13 +44,6 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-    <link
-      rel="preload"
-      href="/carpediam-logo-original.svg"
-      as="image"
-      type="image/svg+xml"
-      fetchpriority="high"
-    />
     {isHome && (
       <>
         <link 
@@ -59,14 +56,14 @@ const {
       </>
     )}
   </head>
-  <body class={isHome ? 'is-home-page' : ''}>
+  <body class={isHome || isSinglePage ? 'is-home-page' : ''}>
     <Preloader />
-    {!isHome && <div class="scroll-progress-line" aria-hidden="true" />}
-    <Header variant={headerVariant} />
-    <main class={isHome ? 'is-home-main' : ''}>
+    {!isHome && !isSinglePage && <div class="scroll-progress-line" aria-hidden="true" />}
+    <Header variant={headerVariant} transparent={headerTransparent} />
+    <main class={isHome || isSinglePage ? 'is-home-main' : ''}>
       <slot />
     </main>
-    {showFooter && <Footer />}
+    {showFooter && !isSinglePage && <Footer />}
 
     <script src="../components/animations/index.ts"></script>
   </body>

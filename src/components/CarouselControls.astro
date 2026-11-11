@@ -1,12 +1,3 @@
----
-import Logo from './Logo.astro';
-
-interface Props {
-  totalSlides?: number;
-}
-
-const { totalSlides = 9 } = Astro.props;
----
 <div class="carousel-controls" aria-label="Carousel Navigation">
   <button 
     type="button" 
@@ -19,16 +10,7 @@ const { totalSlides = 9 } = Astro.props;
       <line x1="1" y1="11" x2="41" y2="11" stroke="#ffffff" stroke-width="1.2" />
       <polyline points="11 2 1 11 11 20" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
-    <!-- Mobile open chevron (Glenn Spiro style) -->
-    <svg width="22" height="34" viewBox="0 0 22 34" fill="none" class="arrow-svg mobile-arrow">
-      <polyline points="16 7 6 17 16 27" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
   </button>
-
-  <!-- Mobile center logo flanked by arrows -->
-  <div class="mobile-center-logo mobile-only">
-    <Logo variant="light" />
-  </div>
 
   <button 
     type="button" 
@@ -40,10 +22,6 @@ const { totalSlides = 9 } = Astro.props;
     <svg width="42" height="22" viewBox="0 0 42 22" fill="none" class="arrow-svg desktop-arrow">
       <line x1="1" y1="11" x2="41" y2="11" stroke="#ffffff" stroke-width="1.2" />
       <polyline points="31 2 41 11 31 20" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-    <!-- Mobile open chevron (Glenn Spiro style) -->
-    <svg width="22" height="34" viewBox="0 0 22 34" fill="none" class="arrow-svg mobile-arrow">
-      <polyline points="6 7 16 17 6 27" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
   </button>
 </div>
@@ -116,55 +94,40 @@ const { totalSlides = 9 } = Astro.props;
     transition: transform 0.35s var(--ease-luxury);
   }
 
-  .mobile-arrow {
-    display: none;
-  }
-
-  .mobile-center-logo {
-    display: none;
-  }
-
-  /* Phone / Android: Glenn Spiro layout -> [ < ] [ CARPE DIAM BOMBAY ] [ > ] */
+  /* Phone / Android: Glenn Spiro layout, arrows only (logo lives in header) */
   @media (max-width: 768px) {
     .carousel-controls {
       top: auto;
-      bottom: max(clamp(0.75rem, 2dvh, 1.25rem), env(safe-area-inset-bottom));
+      bottom: max(5.5dvh, env(safe-area-inset-bottom, 24px));
       left: 0;
       right: 0;
-      height: 42px;
+      height: 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 clamp(1.2rem, 5vw, 2rem);
+      padding: 0 clamp(1.5rem, 6vw, 2.5rem);
       z-index: 30;
     }
 
     .desktop-arrow {
-      display: none;
-    }
-
-    .mobile-arrow {
-      display: block;
-      width: 18px;
-      height: 28px;
+      width: 38px;
     }
 
     .control-btn {
       position: static;
       top: auto;
       transform: none;
-      padding: 8px 14px;
+      padding: 8px 10px;
       min-width: 44px;
       min-height: 44px;
-      color: var(--color-gold);
-      opacity: 0.9;
+      opacity: 0.85;
       pointer-events: auto;
       touch-action: manipulation;
       cursor: pointer;
     }
 
     .control-btn:hover {
-      transform: scale(1.1);
+      transform: none;
       opacity: 1;
     }
 
@@ -174,17 +137,6 @@ const { totalSlides = 9 } = Astro.props;
 
     .next-btn {
       right: auto;
-    }
-
-    .mobile-center-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: auto;
-    }
-
-    .mobile-center-logo :global(.logo-svg) {
-      width: clamp(105px, 26vw, 125px);
     }
   }
 </style>

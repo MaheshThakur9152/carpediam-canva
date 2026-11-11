@@ -1,4 +1,9 @@
 ---
+import logoSvg from '../../public/carpediam-logo-original.svg?raw';
+// pathLength="1" normalizes every path so one dasharray value draws them all
+const drawLogo = logoSvg
+  .replace('<svg ', '<svg class="loader-logo" aria-hidden="true" ')
+  .replaceAll('<path ', '<path pathLength="1" ');
 ---
 <!-- Fast early check to prevent flash on internal navigation within the same session -->
 <script is:inline>
@@ -15,7 +20,7 @@
 </script>
 
 <div class="loading-screen" id="site-loading-screen" aria-label="Carpe Diem" role="status">
-  <img class="loader-logo" src="/carpediam-logo-original.svg" alt="Carpe Diam" />
+  <Fragment set:html={drawLogo} />
   <div class="loader-line"><span></span></div>
   <span class="loader-label">Carpe Diem</span>
 </div>
@@ -45,17 +50,36 @@
     pointer-events: none;
   }
 
-  .loader-mark {
-    font: 500 5.5rem/1 'Amiri', serif;
-    font-style: italic;
-    margin-left: -0.3rem;
-  }
-
-  .loader-logo {
+  .loading-screen :global(.loader-logo) {
     width: 180px;
     height: auto;
-    filter: invert(1);
-    opacity: 0.92;
+    overflow: visible;
+  }
+
+  /* Outline traces in, then fill fades over it */
+  .loading-screen :global(.loader-logo path) {
+    fill: #e9e5dd;
+    fill-opacity: 0;
+    stroke: #e9e5dd;
+    stroke-width: 0.6;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation:
+      draw 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards,
+      fill-in 0.6s ease 1.4s forwards;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fill-in {
+    to {
+      fill-opacity: 0.92;
+      stroke-opacity: 0;
+    }
   }
 
   .loader-line {
@@ -72,7 +96,7 @@
     width: 100%;
     background: #e9e5dd;
     transform-origin: left;
-    animation: load 1.4s ease forwards;
+    animation: load 2s ease forwards;
   }
 
   .loader-label {
@@ -108,45 +132,27 @@
     const loader = document.getElementById('site-loading-screen');
     if (!loader) return;
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      loader.style.display = 'none';
-      return;
-    }
-
-    let isReload = false;
-    try {
-      const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
-      isReload = nav ? nav.type === 'reload' : false;
-    } catch (e) {}
-
-    let alreadySeen = false;
-    try {
-      alreadySeen = !!sessionStorage.getItem('cd_loader_seen');
-    } catch (e) {}
-
-    if (alreadySeen && !isReload) {
-      loader.style.display = 'none';
-      return;
-    }
+    // Inline head script already decided skip (reduced motion / seen this session)
+    if (document.documentElement.classList.contains('cd-skip-loader')) return;
 
     try {
       sessionStorage.setItem('cd_loader_seen', 'true');
     } catch (e) {}
 
-    // Complete loader line animation at 1400ms, then transition away at 1500ms
+    // Logo draw + fill finishes at 2000ms, then transition away at 2200ms
     const dismissTimer = setTimeout(() => {
       loader.classList.add('loading-screen--done');
       setTimeout(() => {
         loader.style.display = 'none';
       }, 850);
-    }, 1500);
+    }, 2200);
 
     // Guaranteed safety timeout: never get stuck indefinitely
     setTimeout(() => {
       clearTimeout(dismissTimer);
       loader.classList.add('loading-screen--done');
       loader.style.display = 'none';
-    }, 3200);
+    }, 4000);
   }
 
   if (document.readyState === 'loading') {

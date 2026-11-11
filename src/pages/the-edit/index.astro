@@ -1,1004 +1,171 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const editSlides = [
-  { image: '/mock-woman-portrait.png', title: 'A study in presence.', detail: 'Quiet confidence, caught in warm light.' },
-  { image: '/Homepage-2.avif', title: 'The Meher necklace.', detail: 'Emerald, pearls, diamonds, onyx in 14kt gold.' },
-  { image: '/Homepage-5.avif', title: 'Polki, reframed.', detail: 'Uncut diamonds with a contemporary pulse.' },
-  { image: '/Homepage-4.avif', title: 'Objects with a point of view.', detail: 'Pieces made to be remembered.' },
-  { image: '/Homepage-3.avif', title: 'The ritual of making.', detail: 'Every surface, considered.' },
-  { image: '/mock-woman-garden.png', title: 'For the collectors.', detail: 'A world built around feeling.' },
-  { image: '/mock-woman-movement.png', title: 'A little friction.', detail: 'Where restraint meets expression.' },
-  { image: '/Homepage-7.avif', title: 'Begin with a question.', detail: 'Discover the world of Carpe Diam.' }
+const gridItems = [
+  {
+    title: 'Emerald Fan Drop Earrings',
+    image: '/the edit/earing.avif',
+    alt: 'Handcrafted emerald and diamond fan drop earrings in gold'
+  },
+  {
+    title: 'Carpe Diam Signet Ring',
+    image: '/the edit/ring.avif',
+    alt: 'Gold signet ring with engraved Carpe Diam crest on vintage parchment'
+  },
+  {
+    title: 'Diamond Double Strand Necklace',
+    image: '/the edit/necklace.avif',
+    alt: 'Double strand diamond choker necklace with floral motifs'
+  },
+  {
+    title: 'Polki Pearl Stud Earrings',
+    image: '/the edit/polki.avif',
+    alt: 'Floral uncut polki diamond and pearl earrings'
+  },
+  {
+    title: 'Coiled Pear Diamond Ring',
+    image: '/the edit/ring2.avif',
+    alt: 'Coiled multi-band ring with pear diamond worn on hand'
+  },
+  {
+    title: 'Emerald Cabochon Tennis Bracelet',
+    image: '/the edit/bracelet.avif',
+    alt: 'Alternating emerald cabochon and baguette diamond gold bracelet'
+  },
+  {
+    title: 'Floral Enamel Chain Bracelet',
+    image: '/the edit/necklace2.avif',
+    alt: 'Artisan gold chain bracelet with turquoise and emerald floral stations'
+  },
+  {
+    title: 'Heritage Polki Floral Studs',
+    image: '/the edit/polki-green.avif',
+    alt: 'Polki and pearl floral earrings on antique woven textile'
+  },
+  {
+    title: 'Emerald & Tanzanite Halo Ring',
+    image: '/the edit/ring3.avif',
+    alt: 'Emerald cabochon ring encircled with royal blue tanzanite halo in yellow gold'
+  }
 ];
 ---
 
 <BaseLayout 
-  title="The Edit — Objects with a point of view — CARPE DIAM BOMBAY" 
-  description="Jewellery and objects for those who look closer. The Edit collection."
+  title="The Edit — CARPE DIAM BOMBAY"
+  description="Objects with a point of view. Discover the curated high jewellery collection by Carpe Diam Bombay."
   headerVariant="light"
+  headerTransparent={true}
   showFooter={false}
 >
-  <div class="the-edit-shell">
-    <!-- HERO SECTION -->
-    <section class="hero" id="top">
-      <img src="/mock-woman-portrait.png" alt="Elegant woman in warm editorial light" />
-      <div class="hero-shade"></div>
-      <div class="hero-copy">
-        <span class="eyebrow">Objects with a point of view</span>
-        <h1>Wear the<br /><em>unfamiliar.</em></h1>
-        <a class="circle-link" href="#collection">
-          Discover
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14M19 12l-7 7-7-7" />
-          </svg>
-        </a>
-      </div>
-      <span class="hero-index">01 / 08</span>
-    </section>
-
-    <!-- INTRO SECTION -->
-    <section class="intro section-pad">
-      <div class="reveal">
-        <span class="eyebrow">A new language of luxury</span>
-        <h2>For those who<br /><em>look closer.</em></h2>
-      </div>
-      <div class="reveal intro-body">
-        <p>Carpediam is a study in contrast — ancient instinct and modern form, restraint and expression. Every piece begins with a question, and ends with something you will keep.</p>
-        <a class="text-link" href="#story">
-          Read our story
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7M7 7h10v10" />
-          </svg>
-        </a>
-      </div>
-      <div class="scroll-word" aria-hidden="true">CARPE DIAM</div>
-    </section>
-
-    <!-- SPLIT FEATURE SECTION -->
-    <section class="split-feature">
-      <div class="split-image">
-        <img src="/Homepage-2.avif" alt="Editorial portrait from the Carpediam collection" />
-      </div>
-      <div class="split-copy">
-        <div class="reveal">
-          <span class="eyebrow">The first collection</span>
-          <h2>Not made<br /><em>to blend in.</em></h2>
-          <p>Fluid silhouettes, tactile metals, and stones chosen for their imperfections. A collection that follows no rules but your own.</p>
-          <a class="text-link" href="#collection">
-            View collection
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 17L17 7M7 7h10v10" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- COLLECTION SECTION -->
-    <section class="collection" id="collection">
-      <div class="collection-head section-pad">
-        <div class="reveal">
-          <span class="eyebrow">Selected works</span>
-          <h2>Uncommon<br /><em>ground.</em></h2>
-        </div>
-        <span class="collection-count">02 — 05</span>
-      </div>
-      <div class="collection-grid">
-        <div class="reveal">
-          <img src="/Homepage-5.avif" alt="Gold sculptural jewellery detail" />
-          <span>01 / Orbit ring</span>
-        </div>
-        <div class="reveal">
-          <img src="/Homepage-4.avif" alt="Close-up of a sculptural necklace" />
-          <span>02 / Tidal necklace</span>
-        </div>
-        <div class="reveal">
-          <img src="/Homepage-3.avif" alt="Artful editorial jewellery composition" />
-          <span>03 / Relic earrings</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- EDIT EXPERIENCE INTERACTIVE SLIDER -->
-    <section class="edit-experience" id="edit">
-      <div class="edit-stage" id="edit-stage" tabindex="0" aria-label="The Edit Slideshow">
-        {editSlides.map((slide, index) => (
-          <img
-            class={`edit-slide-image ${index === 0 ? 'is-active' : ''}`}
-            src={slide.image}
-            alt={slide.title}
-            data-index={index}
-            loading={index === 0 ? "eager" : "lazy"}
-          />
+  <div class="the-edit-page">
+    <div class="the-edit-container">
+      <h1 class="visually-hidden">The Edit — Objects with a point of view</h1>
+      <div class="the-edit-grid" id="the-edit-grid">
+        {gridItems.map((item, index) => (
+          <div class="the-edit-card" data-index={index}>
+            <div class="the-edit-card-inner">
+              <img 
+                src={item.image} 
+                alt={item.alt} 
+                class="the-edit-img" 
+                loading={index < 3 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </div>
+          </div>
         ))}
-        <div class="edit-stage-shade"></div>
-        <div class="edit-topline">
-          <span class="eyebrow">The Edit</span>
-          <span class="edit-kicker">Objects with a point of view</span>
-        </div>
-        <button class="edit-arrow edit-arrow--left" id="edit-prev-btn" aria-label="Previous edit slide">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button class="edit-arrow edit-arrow--right" id="edit-next-btn" aria-label="Next edit slide">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </button>
-        <div class="reveal edit-hero-copy">
-          <span class="eyebrow">Objects with a point of view</span>
-          <h2 id="edit-slide-title">{editSlides[0].title}</h2>
-          <p id="edit-slide-detail">{editSlides[0].detail}</p>
-          <a class="circle-link" href="#story">
-            Discover
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5v14M19 12l-7 7-7-7" />
-            </svg>
-          </a>
-        </div>
-        <span class="edit-counter" id="edit-counter">01 / 08</span>
       </div>
-
-      <div class="edit-introduction section-pad">
-        <div class="reveal">
-          <span class="eyebrow">A closer look</span>
-          <h2>The world<br /><em>behind the pieces.</em></h2>
-        </div>
-        <div class="reveal edit-introduction-copy">
-          <p>A closer look at the world of Carpe Diam. Its inspirations, latest creations and the people and processes behind the pieces.</p>
-          <a class="text-link" href="#story">
-            Read the journal
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M7 17L17 7M7 7h10v10" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- STORY SECTION -->
-    <section class="story section-pad" id="story">
-      <div class="reveal">
-        <span class="eyebrow">The Carpediam ethos</span>
-        <h2>Beauty is<br /><em>in the tension.</em></h2>
-      </div>
-      <div class="reveal story-image">
-        <img src="/mock-woman-movement.png" alt="Textured material and jewellery composition" />
-      </div>
-      <div class="reveal story-copy">
-        <p>We believe the most compelling objects carry a little friction. A sharp edge. A strange proportion. Something that makes you pause, then lean in.</p>
-        <a class="text-link" href="#contact">
-          Discover more
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7M7 7h10v10" />
-          </svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- CLOSING SECTION -->
-    <section class="closing" id="contact">
-      <img src="/Homepage-7.avif" alt="Final Carpediam campaign image" />
-      <div class="closing-overlay"></div>
-      <div class="reveal closing-copy">
-        <span class="eyebrow">Begin a conversation</span>
-        <h2>Make it<br /><em>personal.</em></h2>
-        <a class="circle-link" href="/contact">
-          Get in touch
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7M7 7h10v10" />
-          </svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- NEXT.JS FOOTER -->
-    <footer class="footer section-pad">
-      <a class="wordmark" href="#top">
-        <img src="/carpediam-logo-original.svg" alt="Carpe Diam" />
-      </a>
-      <div class="footer-links">
-        <a href="#collection">Instagram</a>
-        <a href="#edit">The Edit / 08 stories</a>
-        <a href="mailto:hello@carpediam.com">hello@carpediam.com</a>
-      </div>
-      <span class="footer-note">© 2026 Carpediam / Made with intention</span>
-    </footer>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .the-edit-shell {
-    --ink: #171614;
-    --paper: #e9e5dd;
-    --muted: #77736b;
-    --line: rgba(23, 22, 20, 0.22);
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'DM Mono', monospace;
-    font-weight: 300;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
     overflow: hidden;
-    position: relative;
-    width: 100%;
-  }
-
-  .the-edit-shell * {
-    box-sizing: border-box;
-  }
-
-  /* HERO */
-  .hero {
-    height: 100vh;
-    min-height: 680px;
-    position: relative;
-    color: #f4f0e8;
-  }
-
-  .hero img,
-  .closing img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .hero img {
-    object-position: center;
-    transform: scale(1.02);
-    will-change: transform;
-  }
-
-  .hero-shade,
-  .closing-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(83, 55, 42, 0.22), transparent 44%, rgba(83, 55, 42, 0.34));
-  }
-
-  .hero:after,
-  .closing:after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), transparent 40%, rgba(0, 0, 0, 0.12));
-    mix-blend-mode: multiply;
-  }
-
-  .hero-copy,
-  .closing-copy {
-    position: absolute;
-    left: 8.3%;
-    bottom: 11%;
-    z-index: 2;
-  }
-
-  .hero-copy h1,
-  .closing-copy h2 {
-    font: 400 clamp(4.6rem, 10vw, 10rem)/0.78 'Amiri', serif;
-    letter-spacing: -0.055em;
-    margin: 23px 0 46px;
-    text-transform: none;
-  }
-
-  .hero-copy em,
-  .closing-copy em,
-  .intro h2 em,
-  .split-copy h2 em,
-  .collection h2 em,
-  .story h2 em,
-  .edit-introduction h2 em {
-    font-style: italic;
-  }
-
-  .circle-link {
-    width: 103px;
-    height: 103px;
-    border: 1px solid rgba(244, 240, 232, 0.75);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 7px;
-    font-size: 9px;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    transition: background 0.35s, color 0.35s;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .circle-link:hover {
-    background: #f4f0e8;
-    color: var(--ink);
-  }
-
-  .hero-index {
-    position: absolute;
-    right: 34px;
-    bottom: 38px;
-    z-index: 2;
-  }
-
-  .section-pad {
-    padding: 150px 8.3%;
-  }
-
-  .eyebrow,
-  .hero-index,
-  .collection-count,
-  .collection-grid span,
-  .footer-note {
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    display: block;
-    color: var(--muted);
-  }
-
-  /* INTRO */
-  .intro {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 10%;
-    align-items: end;
-    position: relative;
-    overflow: hidden;
-    background: var(--paper);
-  }
-
-  .intro h2,
-  .split-copy h2,
-  .collection h2,
-  .story h2,
-  .edit-introduction h2 {
-    font: 400 clamp(4rem, 8vw, 8rem)/0.78 'Amiri', serif;
-    letter-spacing: -0.06em;
-    margin: 27px 0 0;
-    text-transform: none;
-  }
-
-  .intro-body {
-    max-width: 290px;
-    padding-bottom: 5px;
-  }
-
-  .intro-body p,
-  .split-copy p,
-  .story-copy p {
-    font: 400 15px/1.55 'Amiri', serif;
-    margin: 0 0 31px;
-    color: inherit;
-  }
-
-  .text-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 5px;
-    font-size: 10px;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    color: inherit;
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .text-link:hover {
-    opacity: 0.7;
-  }
-
-  .scroll-word {
-    position: absolute;
-    right: -4%;
-    bottom: 0;
-    color: rgba(23, 22, 20, 0.08);
-    font: 500 clamp(4rem, 14vw, 12rem)/0.8 'Amiri', serif;
-    letter-spacing: -0.08em;
+    clip: rect(0, 0, 0, 0);
     white-space: nowrap;
-    transform: translateY(28%);
-    pointer-events: none;
+    border: 0;
   }
 
-  /* REVEAL ANIMATION */
-  .reveal {
-    opacity: 0;
-    transform: translateY(42px);
-    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  .the-edit-page {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('/the%20edit/background.avif');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: clamp(6.5rem, 13vh, 8.5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(4rem, 8vh, 6rem);
+    box-sizing: border-box;
+    font-family: var(--font-primary, "Amiri", serif);
   }
 
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
+  .the-edit-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    width: 100%;
   }
 
-  /* SPLIT FEATURE */
-  .split-feature {
+  .the-edit-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 720px;
-    background: #d8d2c8;
-    color: var(--ink);
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.25rem, 2.5vw, 2.5rem);
+    width: 100%;
   }
 
-  .split-image {
-    min-height: 650px;
+  .the-edit-card {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.4s var(--ease-luxury, cubic-bezier(0.25, 1, 0.5, 1)), box-shadow 0.4s ease;
   }
 
-  .split-image img {
+  .the-edit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .the-edit-card-inner {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-  }
-
-  .split-image:hover img,
-  .collection-grid div:hover img,
-  .story-image:hover img {
-    transform: scale(1.045);
-  }
-
-  .split-copy {
-    display: flex;
-    align-items: center;
-    padding: 11%;
-  }
-
-  /* COLLECTION */
-  .collection {
-    background: #173f3a;
-    color: #e9e5dd;
-    padding-bottom: 145px;
-  }
-
-  .collection-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .collection-head .eyebrow {
-    color: #a7a197;
-  }
-
-  .collection-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr 1fr;
-    gap: 18px;
-    padding: 0 3.2%;
-    align-items: start;
-  }
-
-  .collection-grid img {
-    width: 100%;
-    display: block;
-    aspect-ratio: 0.77;
-    object-fit: cover;
-    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-  }
-
-  .collection-grid div:nth-child(2) {
-    margin-top: 100px;
-  }
-
-  .collection-grid div:nth-child(3) {
-    margin-top: 35px;
-  }
-
-  .collection-grid span {
-    display: block;
-    padding-top: 13px;
-    color: #a7a197;
-  }
-
-  /* EDIT EXPERIENCE */
-  .edit-experience {
-    background: #789b8a;
-    color: #f0ece4;
-  }
-
-  .edit-stage {
-    min-height: 100svh;
-    height: max(760px, 100svh);
-    position: relative;
+    background-color: #ffffff;
     overflow: hidden;
-    outline: none;
   }
 
-  .edit-slide-image {
-    position: absolute;
-    inset: 0;
+  .the-edit-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    opacity: 0;
-    transform: scale(1.08);
-    transition: opacity 1.2s ease, transform 2s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform, opacity;
-  }
-
-  .edit-slide-image.is-active {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .edit-stage-shade {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(83, 55, 42, 0.28), transparent 34%, rgba(83, 55, 42, 0.38));
-  }
-
-  .edit-topline {
-    position: absolute;
-    z-index: 1;
-    top: 38px;
-    left: 8.3%;
-    right: 8.3%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #f0ece4;
-  }
-
-  .edit-topline .eyebrow,
-  .edit-kicker {
-    color: rgba(240, 236, 228, 0.72);
-  }
-
-  .edit-kicker {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-  }
-
-  .edit-arrow {
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 1px solid rgba(240, 236, 228, 0.6);
-    color: #f0ece4;
-    background: rgba(17, 17, 15, 0.14);
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-
-  .edit-arrow:hover {
-    background: #f0ece4;
-    color: #11110f;
-  }
-
-  .edit-arrow--left {
-    left: 4%;
-  }
-
-  .edit-arrow--right {
-    right: 4%;
-  }
-
-  .edit-hero-copy {
-    position: absolute;
-    z-index: 1;
-    left: 16%;
-    bottom: 12%;
-    max-width: 560px;
-  }
-
-  .edit-hero-copy .eyebrow {
-    color: rgba(240, 236, 228, 0.76);
-  }
-
-  .edit-hero-copy h2 {
-    font: 400 clamp(3.7rem, 8vw, 8.4rem)/0.82 'Amiri', serif;
-    letter-spacing: -0.05em;
-    margin: 22px 0 16px;
-    max-width: 680px;
-    text-transform: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .edit-hero-copy p {
-    max-width: 290px;
-    color: rgba(240, 236, 228, 0.8);
-    font: 400 14px/1.5 'Amiri', serif;
-    margin: 0 0 32px;
-    transition: opacity 0.3s ease;
-  }
-
-  .edit-counter {
-    position: absolute;
-    z-index: 1;
-    right: 8.3%;
-    bottom: 48px;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-  }
-
-  .edit-introduction {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 10%;
-    align-items: end;
-    background: #e9e5dd;
-    color: #171614;
-  }
-
-  .edit-introduction-copy {
-    max-width: 330px;
-  }
-
-  .edit-introduction-copy p {
-    font: 400 18px/1.35 'Amiri', serif;
-    margin: 0 0 28px;
-  }
-
-  .edit-introduction .eyebrow {
-    color: #77736b;
-  }
-
-  /* STORY */
-  .story {
-    display: grid;
-    grid-template-columns: 1fr 0.75fr;
-    column-gap: 8%;
-    background: var(--paper);
-    color: var(--ink);
-  }
-
-  .story-image {
-    grid-column: 2;
-    margin-top: 95px;
-  }
-
-  .story-image img {
-    width: 100%;
     display: block;
-    aspect-ratio: 0.76;
-    object-fit: cover;
-    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
+    transition: transform 0.6s var(--ease-luxury, cubic-bezier(0.25, 1, 0.5, 1));
   }
 
-  .story-copy {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: end;
-    max-width: 280px;
-    margin-top: -40px;
+  .the-edit-card:hover .the-edit-img {
+    transform: scale(1.03);
   }
 
-  /* CLOSING */
-  .closing {
-    position: relative;
-    min-height: 88vh;
-    height: 88vh;
-    color: #f4f0e8;
-  }
-
-  .closing img {
-    object-position: center;
-    will-change: transform;
-  }
-
-  .closing-copy {
-    bottom: 13%;
-  }
-
-  /* FOOTER */
-  .footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: end;
-    padding-top: 45px;
-    padding-bottom: 45px;
-    background: var(--paper);
-    color: var(--ink);
-  }
-
-  .footer .wordmark {
-    font: 500 23px/1 'Amiri', serif;
-    letter-spacing: 0.13em;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .footer .wordmark img {
-    display: block;
-    width: 112px;
-    height: auto;
-    filter: none;
-  }
-
-  .footer-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .footer-links a {
-    color: inherit;
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .footer-links a:hover {
-    opacity: 0.6;
-  }
-
-  .footer-note {
-    color: var(--muted);
-    text-align: right;
-    letter-spacing: 0.08em;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 700px) {
-    .hero {
-      min-height: 620px;
-    }
-    .hero-copy,
-    .closing-copy {
-      left: 8%;
-      bottom: 9%;
-    }
-    .hero-copy h1,
-    .closing-copy h2 {
-      font-size: 5rem;
-      margin: 20px 0 38px;
-    }
-    .section-pad {
-      padding: 105px 8%;
-    }
-    .intro,
-    .split-feature,
-    .story {
-      display: block;
-    }
-    .intro-body {
-      margin-top: 55px;
-    }
-    .split-image {
-      height: 65vh;
-      min-height: 0;
-    }
-    .split-copy {
-      padding: 90px 8%;
-    }
-    .collection {
-      padding-bottom: 90px;
-    }
-    .collection-head {
-      padding-bottom: 70px;
-    }
-    .collection-grid {
-      display: block;
-      padding: 0 8%;
-    }
-    .collection-grid div {
-      margin: 0 0 45px !important;
-    }
-    .collection-grid img {
-      aspect-ratio: 0.9;
-    }
-    .closing {
-      height: 78vh;
-      min-height: 580px;
-    }
-    .story-image {
-      margin: 70px 0 50px;
-    }
-    .story-copy {
-      margin: 0;
-      max-width: 290px;
-    }
-    .footer {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 35px;
-    }
-    .footer-note {
-      text-align: left;
-    }
-    .edit-stage {
-      height: 100svh;
-      min-height: 620px;
-    }
-    .edit-topline {
-      top: 22px;
-      left: 8%;
-      right: 8%;
-    }
-    .edit-kicker {
-      display: none;
-    }
-    .edit-hero-copy {
-      left: 8%;
-      right: 8%;
-      bottom: 10%;
-    }
-    .edit-hero-copy h2 {
-      font-size: 4.8rem;
-      max-width: 330px;
-      margin: 17px 0 14px;
-    }
-    .edit-hero-copy p {
-      font-size: 15px;
-      max-width: 245px;
-      margin-bottom: 24px;
-    }
-    .edit-arrow {
-      top: auto;
-      bottom: 30px;
-      width: 42px;
-      height: 42px;
-    }
-    .edit-arrow--left {
-      left: 8%;
-    }
-    .edit-arrow--right {
-      right: 8%;
-    }
-    .edit-counter {
-      right: 8%;
-      bottom: 44px;
-    }
-    .edit-introduction {
-      display: block;
-    }
-    .edit-introduction-copy {
-      margin-top: 55px;
-      max-width: 280px;
-    }
-    .edit-introduction-copy p {
-      font-size: 19px;
+  @media (max-width: 860px) {
+    .the-edit-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      transition: none;
-      opacity: 1 !important;
-      transform: none !important;
+  @media (max-width: 520px) {
+    .the-edit-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
     }
-    .split-image img,
-    .collection-grid img,
-    .edit-slide-image {
-      transition: none;
+    .the-edit-page {
+      padding-top: 5.5rem;
     }
   }
 </style>
-
-<script>
-  function setupEditPage() {
-    const editSlides = [
-      { image: '/mock-woman-portrait.png', title: 'A study in presence.', detail: 'Quiet confidence, caught in warm light.' },
-      { image: '/Homepage-2.avif', title: 'The Meher necklace.', detail: 'Emerald, pearls, diamonds, onyx in 14kt gold.' },
-      { image: '/Homepage-5.avif', title: 'Polki, reframed.', detail: 'Uncut diamonds with a contemporary pulse.' },
-      { image: '/Homepage-4.avif', title: 'Objects with a point of view.', detail: 'Pieces made to be remembered.' },
-      { image: '/Homepage-3.avif', title: 'The ritual of making.', detail: 'Every surface, considered.' },
-      { image: '/mock-woman-garden.png', title: 'For the collectors.', detail: 'A world built around feeling.' },
-      { image: '/mock-woman-movement.png', title: 'A little friction.', detail: 'Where restraint meets expression.' },
-      { image: '/Homepage-7.avif', title: 'Begin with a question.', detail: 'Discover the world of Carpe Diam.' }
-    ];
-
-    // Reveal IntersectionObserver
-    const reveals = document.querySelectorAll('.the-edit-shell .reveal');
-    if (reveals.length > 0) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      }, { threshold: 0.14 });
-
-      reveals.forEach((el) => observer.observe(el));
-    }
-
-    // Edit Interactive Slider
-    const stage = document.getElementById('edit-stage');
-    if (!stage) return;
-
-    let activeSlide = 0;
-    const slideImgs = stage.querySelectorAll<HTMLImageElement>('.edit-slide-image');
-    const titleEl = document.getElementById('edit-slide-title');
-    const detailEl = document.getElementById('edit-slide-detail');
-    const counterEl = document.getElementById('edit-counter');
-    const prevBtn = document.getElementById('edit-prev-btn');
-    const nextBtn = document.getElementById('edit-next-btn');
-
-    function goToSlide(index: number) {
-      activeSlide = (index + editSlides.length) % editSlides.length;
-
-      slideImgs.forEach((img, i) => {
-        img.classList.toggle('is-active', i === activeSlide);
-      });
-
-      if (titleEl) {
-        titleEl.style.opacity = '0';
-        setTimeout(() => {
-          titleEl.textContent = editSlides[activeSlide].title;
-          titleEl.style.opacity = '1';
-        }, 150);
-      }
-
-      if (detailEl) {
-        detailEl.style.opacity = '0';
-        setTimeout(() => {
-          detailEl.textContent = editSlides[activeSlide].detail;
-          detailEl.style.opacity = '1';
-        }, 150);
-      }
-
-      if (counterEl) {
-        counterEl.textContent = `${String(activeSlide + 1).padStart(2, '0')} / 08`;
-      }
-    }
-
-    prevBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      goToSlide(activeSlide - 1);
-    });
-
-    nextBtn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      goToSlide(activeSlide + 1);
-    });
-
-    // Keyboard navigation
-    stage.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        goToSlide(activeSlide - 1);
-      } else if (e.key === 'ArrowRight') {
-        goToSlide(activeSlide + 1);
-      }
-    });
-
-    // Touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-    stage.addEventListener('touchstart', (e: TouchEvent) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    stage.addEventListener('touchend', (e: TouchEvent) => {
-      touchEndX = e.changedTouches[0].screenX;
-      const diff = touchEndX - touchStartX;
-      if (Math.abs(diff) > 40) {
-        if (diff > 0) {
-          goToSlide(activeSlide - 1);
-        } else {
-          goToSlide(activeSlide + 1);
-        }
-      }
-    }, { passive: true });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupEditPage);
-  } else {
-    setupEditPage();
-  }
-  document.addEventListener('astro:page-load', setupEditPage);
-</script>
