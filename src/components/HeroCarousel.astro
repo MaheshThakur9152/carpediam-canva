@@ -60,6 +60,7 @@ import { heroSlides } from '../data/heroSlides';
     function loadSlideImage(slideEl: HTMLElement) {
       const img = slideEl.querySelector<HTMLImageElement>('img[data-src]');
       if (img && img.dataset.src) {
+        if (img.dataset.srcset) img.srcset = img.dataset.srcset;
         img.src = img.dataset.src;
         img.removeAttribute('data-src');
       }

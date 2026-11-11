@@ -11,6 +11,8 @@ const { slide, index, isActive } = Astro.props;
 const hasContent = Boolean(slide.title);
 const hasStatement = Boolean(slide.statement);
 const isCritical = index === 0;
+// Slide 0 has no -1280 variant and is preloaded by exact URL in BaseLayout
+const srcset = isCritical ? undefined : `${slide.image.replace('.avif', '-1280.avif')} 1280w, ${slide.image} 2560w`;
 ---
 <article 
   class={`hero-slide ${isActive ? 'is-active' : ''} ${hasContent ? 'is-product' : ''}`}
@@ -21,6 +23,8 @@ const isCritical = index === 0;
     <img 
       src={isCritical ? slide.image : undefined}
       data-src={!isCritical ? slide.image : undefined}
+      data-srcset={srcset}
+      sizes="100vw"
       alt={slide.alt} 
       class="slide-artwork"
       loading={isCritical ? "eager" : "lazy"}
