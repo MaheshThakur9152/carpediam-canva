@@ -115,7 +115,8 @@ const { variant = 'light', transparent = false } = Astro.props;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* Nav sits level with the wordmark line, not centered on the BOMBAY subline */
+    align-items: flex-start;
     pointer-events: auto;
   }
 
@@ -137,6 +138,8 @@ const { variant = 'light', transparent = false } = Astro.props;
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    /* Height of the CARPE DIAM wordmark band (logo width x 44/312 in Logo.astro) so nav centers on it */
+    height: calc(clamp(140px, 12vw, 190px) * 44 / 312);
   }
 
   .nav-list {

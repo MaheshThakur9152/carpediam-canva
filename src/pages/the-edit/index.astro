@@ -79,6 +79,91 @@ const gridItems = [
   </div>
 </BaseLayout>
 
+<script>
+  // Desktop: endless, slow auto-glide of the row. Wheel/trackpad push it along with eased momentum,
+  // hover eases it to a stop. Phones keep the vertical grid untouched; reduced motion gets a plain scroll row.
+  const grid = document.getElementById('the-edit-grid');
+  const desktop = window.matchMedia('(min-width: 861px)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const BASE_SPEED = 38; // px per second
+  let x = 0;
+  let speed = 0;
+  let push = 0;
+  let hovering = false;
+  let loopWidth = 0;
+  let frame = 0;
+  let last = 0;
+
+  const measure = () => {
+    const firstClone = grid?.querySelector<HTMLElement>('.is-clone');
+    const first = grid?.firstElementChild as HTMLElement | null;
+    loopWidth = firstClone && first ? firstClone.offsetLeft - first.offsetLeft : 0;
+  };
+
+  const tick = (now: number) => {
+    if (!grid) return;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    speed += ((hovering ? 0 : BASE_SPEED) - speed) * Math.min(dt * 3, 1);
+    const step = push * Math.min(dt * 6, 1);
+    push -= step;
+    x += speed * dt + step;
+    if (loopWidth > 0) x = ((x % loopWidth) + loopWidth) % loopWidth;
+    grid.style.transform = `translate3d(${-x}px, 0, 0)`;
+    frame = requestAnimationFrame(tick);
+  };
+
+  const onWheel = (e: WheelEvent) => {
+    e.preventDefault();
+    // deltaMode 1 = lines (Firefox mouse wheels)
+    const delta = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) * (e.deltaMode === 1 ? 40 : 1);
+    push += delta;
+  };
+
+  const enter = () => { hovering = true; };
+  const leave = () => { hovering = false; };
+
+  const start = () => {
+    if (!grid || frame) return;
+    // Second copy of the cards makes the loop seamless; hidden from assistive tech
+    Array.from(grid.children).forEach((card) => {
+      const clone = card.cloneNode(true) as HTMLElement;
+      clone.classList.add('is-clone');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelector('img')?.setAttribute('alt', '');
+      grid.appendChild(clone);
+    });
+    grid.classList.add('is-gliding');
+    measure();
+    grid.addEventListener('wheel', onWheel, { passive: false });
+    grid.addEventListener('mouseenter', enter);
+    grid.addEventListener('mouseleave', leave);
+    window.addEventListener('resize', measure);
+    last = performance.now();
+    frame = requestAnimationFrame(tick);
+  };
+
+  const stop = () => {
+    if (!grid || !frame) return;
+    cancelAnimationFrame(frame);
+    frame = 0;
+    grid.querySelectorAll('.is-clone').forEach((el) => el.remove());
+    grid.classList.remove('is-gliding');
+    grid.style.transform = '';
+    grid.removeEventListener('wheel', onWheel);
+    grid.removeEventListener('mouseenter', enter);
+    grid.removeEventListener('mouseleave', leave);
+    window.removeEventListener('resize', measure);
+    x = speed = push = 0;
+  };
+
+  const sync = () => (desktop.matches && !reduceMotion.matches ? start() : stop());
+  desktop.addEventListener('change', sync);
+  reduceMotion.addEventListener('change', sync);
+  sync();
+</script>
+
 <style>
   .visually-hidden {
     position: absolute;
@@ -150,6 +235,66 @@ const gridItems = [
 
   .the-edit-card:hover .the-edit-img {
     transform: scale(1.03);
+  }
+
+  /* Desktop: single horizontal row of portrait cards (Figma "The Edit") */
+  @media (min-width: 861px) {
+    .the-edit-page {
+      height: 100vh;
+      height: 100dvh;
+      padding: max(6rem, 22vh) 0 max(3rem, 16vh);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .the-edit-container {
+      max-width: none;
+      height: 100%;
+    }
+
+    .the-edit-grid {
+      display: flex;
+      gap: clamp(0.75rem, 1.2vw, 1.25rem);
+      height: 100%;
+      padding: 0 var(--spacing-header-x);
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      box-sizing: border-box;
+    }
+
+    .the-edit-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Auto-glide: JS moves the row with a transform, so the container clips instead of scrolling */
+    .the-edit-container:has(.is-gliding) {
+      overflow: hidden;
+      /* Cards dissolve into the edges instead of hard-cutting */
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+    }
+
+    .the-edit-grid.is-gliding {
+      overflow: visible;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .the-edit-card {
+      flex: 0 0 auto;
+      height: 100%;
+      width: auto;
+      aspect-ratio: 3 / 4;
+      box-shadow: none;
+    }
+
+    .the-edit-card:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
   @media (max-width: 860px) {

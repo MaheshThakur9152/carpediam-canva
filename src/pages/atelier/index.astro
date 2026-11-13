@@ -1,210 +1,163 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-<BaseLayout 
+<BaseLayout
   title="Atelier — CARPE DIAM BOMBAY"
   showFooter={false}
-  isSinglePage={true}
   headerVariant="light"
   headerTransparent={true}
 >
   <div class="atelier-page">
-    <div class="atelier-split">
-      <!-- Left / Top Column: #C7B89D editorial statement -->
-      <section class="atelier-pane atelier-content">
-        <div class="atelier-copy-wrap">
-          <span class="atelier-eyebrow">Atelier</span>
-          <h1 class="atelier-heading">
-            Carpe Diam was born from a shared perspective on design, craftsmanship, and contemporary fine jewelry.
-          </h1>
-          <p class="atelier-body">
-            Founded by <strong>Joohi and Rushabh</strong>, Carpe Diam brings together artistic vision and international jewelry expertise to create pieces that balance contemporary design with Indian sensibilities, thoughtful in form and precise in craftsmanship.
-          </p>
-        </div>
-      </section>
+    <!-- Section 1: full-bleed craftsman image with centered statement -->
+    <section class="atelier-hero">
+      <img
+        src="/atlier.jpg"
+        alt="Carpe Diam Atelier Craftsmanship"
+        class="atelier-hero-img"
+        loading="eager"
+        decoding="async"
+      />
+      <h1 class="atelier-heading">
+        Carpe Diam was born from a shared perspective on design, craftsmanship, and contemporary fine jewelry.
+      </h1>
+    </section>
 
-      <!-- Right / Bottom Column: Craftsman image -->
-      <section class="atelier-pane atelier-media">
-        <img 
-          src="/atlier.jpg" 
-          alt="Carpe Diam Atelier Craftsmanship" 
-          class="atelier-img" 
-          loading="eager"
-          decoding="async"
-        />
-      </section>
-    </div>
+    <!-- Section 2: founders copy with necklace -->
+    <section class="atelier-story">
+      <div class="atelier-copy">
+        <p class="atelier-eyebrow">Jewelry, with a point of view.</p>
+        <p class="atelier-body">
+          Founded by <strong>Joohi and Rushabh</strong>, Carpe Diam brings together artistic vision and international jewelry expertise to create pieces that balance contemporary design with Indian sensibilities, thoughtful in form and precise in craftsmanship.
+        </p>
+      </div>
+      <!-- Necklace image: public/atelier-necklace.avif -->
+      <img
+        src="/atelier-necklace.avif"
+        alt="Carpe Diam diamond and pearl choker"
+        class="atelier-necklace"
+        loading="lazy"
+        decoding="async"
+      />
+    </section>
   </div>
 </BaseLayout>
 
 <style>
   .atelier-page {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    max-height: 100dvh;
-    overflow: hidden !important;
-    background-color: #C7B89D;
-    position: fixed;
-    inset: 0;
-  }
-
-  .atelier-split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100vh;
-    height: 100dvh;
-    max-height: 100dvh;
     width: 100%;
-    overflow: hidden !important;
   }
 
-  .atelier-pane {
+  /* Section 1 */
+  .atelier-hero {
     position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background-color: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .atelier-hero-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    min-height: 0;
+    object-fit: cover;
+    object-position: center 62%;
   }
 
-  /* Left Editorial Content */
-  .atelier-content {
-    background-color: #C7B89D;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: clamp(6.5rem, 14vh, 10rem) clamp(2.5rem, 6vw, 6.5rem) clamp(3.5rem, 8vh, 6rem);
+  .atelier-heading {
+    position: relative;
+    max-width: 26ch;
+    margin: 0;
+    padding: 0 1.5rem;
+    text-align: center;
+    font-family: var(--font-primary, "Amiri", serif);
+    font-weight: 400;
+    font-size: clamp(1.85rem, 2.7vw, 2.9rem);
+    line-height: 1.32;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+    text-transform: none;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Section 2: copy left, necklace box flush to the right edge (Figma "Atelier 2") */
+  .atelier-story {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 560px;
+    background-color: #d9d3bf;
+    display: grid;
+    grid-template-columns: 45fr 55fr;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    padding-left: clamp(2rem, 10vw, 10rem);
     box-sizing: border-box;
     overflow: hidden;
   }
 
-  .atelier-copy-wrap {
-    max-width: 580px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  .atelier-copy {
+    max-width: 25rem;
+    padding-right: clamp(1.5rem, 3vw, 3rem);
   }
 
   .atelier-eyebrow {
     font-family: var(--font-primary, "Amiri", serif);
     font-style: italic;
     font-size: clamp(1.2rem, 1.45vw, 1.55rem);
-    color: #ffffff;
-    opacity: 0.95;
-    margin-bottom: clamp(1.5rem, 3.2vh, 2.5rem);
-    display: inline-block;
     letter-spacing: 0.02em;
-  }
-
-  .atelier-heading {
-    font-family: var(--font-primary, "Amiri", serif);
-    font-weight: 700;
-    font-size: clamp(1.85rem, 2.8vw, 3rem);
-    line-height: 1.25;
-    letter-spacing: 0.01em;
-    color: #ffffff;
-    text-transform: none;
-    margin: 0 0 clamp(1.8rem, 3.8vh, 3rem) 0;
+    color: #1a1a1a;
+    margin: 0 0 clamp(1rem, 2vh, 1.4rem);
   }
 
   .atelier-body {
     font-family: var(--font-primary, "Amiri", serif);
-    font-weight: 400;
-    font-size: clamp(1.08rem, 1.3vw, 1.32rem);
-    line-height: 1.68;
-    color: #ffffff;
-    opacity: 0.95;
+    font-size: clamp(1.2rem, 1.45vw, 1.55rem);
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    color: #1a1a1a;
     margin: 0;
-    letter-spacing: 0.02em;
   }
 
   .atelier-body strong {
     font-weight: 700;
-    color: #ffffff;
-    opacity: 1;
   }
 
-  /* Right Media */
-  .atelier-media {
-    overflow: hidden;
-    background-color: #111111;
-  }
-
-  .atelier-img {
+  /* Source is 1080x1920 with the choker in the middle band: crop to it and let the right side bleed */
+  .atelier-necklace {
     width: 100%;
-    height: 100%;
+    height: 76%;
     object-fit: cover;
-    object-position: center;
-    display: block;
+    object-position: 0 52%;
+    transform: scale(1.12);
+    transform-origin: left center;
   }
 
-  /* Mobile & Tablet: Strict Single-Page 2-Row Split (Zero Scroll) */
   @media (max-width: 900px) {
-    .atelier-page {
-      overflow: hidden !important;
-      position: fixed;
-      inset: 0;
-      height: 100vh;
-      height: 100dvh;
-    }
-
-    .atelier-split {
+    .atelier-story {
+      height: auto;
+      min-height: 100dvh;
       grid-template-columns: 1fr;
-      grid-template-rows: 56% 44%;
-      height: 100vh;
-      height: 100dvh;
-      max-height: 100dvh;
-      overflow: hidden !important;
+      grid-template-rows: auto auto;
+      align-content: center;
+      gap: 2rem;
+      padding: 6rem 0 3rem 1.5rem;
     }
 
-    .atelier-content {
-      padding: max(3.8rem, calc(env(safe-area-inset-top) + 3rem)) 1.25rem 1rem;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .atelier-copy-wrap {
-      max-width: 100%;
-    }
-
-    .atelier-eyebrow {
-      font-size: 0.95rem;
-      margin-bottom: 0.45rem;
-    }
-
-    .atelier-heading {
-      font-size: clamp(1.05rem, 4.4vw, 1.35rem);
-      line-height: 1.22;
-      margin-bottom: 0.55rem;
+    .atelier-copy {
+      padding-right: 1.5rem;
     }
 
     .atelier-body {
-      font-size: clamp(0.78rem, 2.7vw, 0.88rem);
-      line-height: 1.4;
+      font-size: 1.1rem;
     }
 
-    .atelier-media {
-      height: 100%;
-      min-height: 0;
-    }
-  }
-
-  @media (max-height: 600px) and (max-width: 900px) {
-    .atelier-split {
-      grid-template-rows: 60% 40%;
-    }
-    .atelier-content {
-      padding-top: 3.2rem;
-    }
-    .atelier-heading {
-      font-size: 1rem;
-      line-height: 1.2;
-      margin-bottom: 0.4rem;
-    }
-    .atelier-body {
-      font-size: 0.75rem;
-      line-height: 1.3;
+    .atelier-necklace {
+      height: auto;
+      aspect-ratio: 4 / 3;
     }
   }
 </style>

@@ -3,7 +3,7 @@ import HeroSlide from './HeroSlide.astro';
 import CarouselControls from './CarouselControls.astro';
 import { heroSlides } from '../data/heroSlides';
 ---
-<section class="hero-carousel-container" aria-roledescription="carousel" aria-label="High Jewellery Collection">
+<section class="hero-carousel-container is-first-slide" aria-roledescription="carousel" aria-label="High Jewellery Collection">
   <div class="slides-track" id="hero-carousel-track">
     {heroSlides.map((slide, index) => (
       <HeroSlide 
@@ -18,6 +18,11 @@ import { heroSlides } from '../data/heroSlides';
 </section>
 
 <style>
+  .hero-carousel-container.is-first-slide :global(.carousel-controls) {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   .hero-carousel-container {
     position: relative;
     width: 100vw;
@@ -91,6 +96,9 @@ import { heroSlides } from '../data/heroSlides';
         slide.classList.toggle('is-active', isActive);
         slide.setAttribute('aria-hidden', (!isActive).toString());
       });
+
+      // No arrows on the intro statement slide
+      document.querySelector('.hero-carousel-container')?.classList.toggle('is-first-slide', currentIndex === 0);
 
       preloadAdjacent(currentIndex);
     }

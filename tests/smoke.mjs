@@ -25,8 +25,8 @@ async function smokeTest() {
     const loader = await page.$('#site-loading-screen');
     if (!loader) throw new Error('New Next.js loading screen element (#site-loading-screen) missing');
 
-    const loaderLine = await page.$('.loader-line span');
-    if (!loaderLine) throw new Error('.loader-line span missing');
+    // Loader shows the logo only: no progress line or text label
+    if (await page.$('.loader-line, .loader-label')) throw new Error('Loader should show only the logo');
 
     const loaderLogo = await page.$('.loader-logo');
     if (!loaderLogo) throw new Error('.loader-logo missing');
@@ -52,7 +52,7 @@ async function smokeTest() {
     const editGrid = await page.$('#the-edit-grid');
     if (!editGrid) throw new Error('#the-edit-grid element missing on /the-edit');
 
-    const cards = await page.$$('#the-edit-grid .the-edit-card');
+    const cards = await page.$$('#the-edit-grid .the-edit-card:not(.is-clone)');
     if (cards.length !== 9) throw new Error(`Expected 9 edit cards, found: ${cards.length}`);
 
     // Verify first card image loads
@@ -76,7 +76,7 @@ async function smokeTest() {
     await page.goto(`${BASE_URL}/the-edit`, { waitUntil: 'domcontentloaded' });
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(500);
-    const reloadedCards = await page.$$('#the-edit-grid .the-edit-card');
+    const reloadedCards = await page.$$('#the-edit-grid .the-edit-card:not(.is-clone)');
     if (reloadedCards.length !== 9) throw new Error('Failed to reload /the-edit');
 
     if (errors.length > 0) throw new Error(`Console errors: ${errors.join(' | ')}`);

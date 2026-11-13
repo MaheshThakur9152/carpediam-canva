@@ -21,8 +21,6 @@ const drawLogo = logoSvg
 
 <div class="loading-screen" id="site-loading-screen" aria-label="Carpe Diem" role="status">
   <Fragment set:html={drawLogo} />
-  <div class="loader-line"><span></span></div>
-  <span class="loader-label">Carpe Diem</span>
 </div>
 
 <style>
@@ -82,47 +80,9 @@ const drawLogo = logoSvg
     }
   }
 
-  .loader-line {
-    width: 104px;
-    height: 1px;
-    background: rgba(233, 229, 221, 0.25);
-    margin: 28px 0 13px;
-    overflow: hidden;
-  }
-
-  .loader-line span {
-    display: block;
-    height: 100%;
-    width: 100%;
-    background: #e9e5dd;
-    transform-origin: left;
-    animation: load 1.9s ease forwards;
-  }
-
-  .loader-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #8d8980;
-  }
-
-  @keyframes load {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .loading-screen {
       display: none !important;
-    }
-    .loader-line span {
-      animation: none;
-      transform: scaleX(1);
     }
   }
 </style>
