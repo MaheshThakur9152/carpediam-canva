@@ -3,7 +3,7 @@ import HeroSlide from './HeroSlide.astro';
 import CarouselControls from './CarouselControls.astro';
 import { heroSlides } from '../data/heroSlides';
 ---
-<section class="hero-carousel-container is-first-slide" aria-roledescription="carousel" aria-label="High Jewellery Collection">
+<section class="hero-carousel-container is-first-slide" aria-roledescription="carousel" aria-label="High Jewelry Collection">
   <div class="slides-track" id="hero-carousel-track">
     {heroSlides.map((slide, index) => (
       <HeroSlide 
@@ -61,6 +61,9 @@ import { heroSlides } from '../data/heroSlides';
 
     let currentIndex = 0;
     const total = slides.length;
+    const FADE_MS = 1000; // matches .hero-slide opacity transition
+    let leavingTimer: number | undefined;
+    let navToken = 0;
 
     function loadSlideImage(slideEl: HTMLElement) {
       const img = slideEl.querySelector<HTMLImageElement>('img[data-src]');
@@ -78,7 +81,8 @@ import { heroSlides } from '../data/heroSlides';
       if (slides[prevIdx]) loadSlideImage(slides[prevIdx]);
     }
 
-    function goToSlide(targetIndex: number) {
+    async function goToSlide(targetIndex: number) {
+      const previousIndex = currentIndex;
       if (targetIndex < 0) {
         currentIndex = total - 1;
       } else if (targetIndex >= total) {
@@ -87,15 +91,30 @@ import { heroSlides } from '../data/heroSlides';
         currentIndex = targetIndex;
       }
 
-      if (slides[currentIndex]) {
-        loadSlideImage(slides[currentIndex]);
-      }
+      if (previousIndex === currentIndex) return;
+      const token = ++navToken;
 
-      slides.forEach((slide, idx) => {
-        const isActive = idx === currentIndex;
+      // Fade only once the incoming art is decoded, else the old slide shows through an empty one
+      const incoming = slides[currentIndex];
+      loadSlideImage(incoming);
+      const img = incoming.querySelector<HTMLImageElement>('img');
+      if (img && !img.complete) {
+        await Promise.race([img.decode().catch(() => {}), new Promise((r) => setTimeout(r, 1500))]);
+      }
+      if (token !== navToken) return;
+
+      // Crossfade: incoming fades in on top, outgoing stays opaque beneath, so the shared backdrop never dips
+      clearTimeout(leavingTimer);
+      const outgoing = [...slides].find((s) => s.classList.contains('is-active'));
+      slides.forEach((slide) => {
+        const isActive = slide === incoming;
         slide.classList.toggle('is-active', isActive);
+        slide.classList.toggle('is-leaving', slide === outgoing && !isActive);
         slide.setAttribute('aria-hidden', (!isActive).toString());
       });
+      leavingTimer = window.setTimeout(() => {
+        outgoing?.classList.remove('is-leaving');
+      }, FADE_MS);
 
       // No arrows on the intro statement slide
       document.querySelector('.hero-carousel-container')?.classList.toggle('is-first-slide', currentIndex === 0);
@@ -141,7 +160,7 @@ import { heroSlides } from '../data/heroSlides';
         setTimeout(() => {
           isWheelThrottled = false;
           wheelDeltaAccumulator = 0;
-        }, 850);
+        }, FADE_MS);
       }
     }
 
@@ -187,12 +206,14 @@ import { heroSlides } from '../data/heroSlides';
     }, { passive: true });
 
     container.addEventListener('touchend', (e) => {
-      const touchEndX = (e as TouchEvent).changedTouches[0].screenX;
-      const diff = touchStartX - touchEndX;
-      if (Math.abs(diff) > 40) {
+      const diff = touchStartX - (e as TouchEvent).changedTouches[0].screenX;
+      const diffY = touchStartY - (e as TouchEvent).changedTouches[0].screenY;
+      // Horizontal swipe, or vertical swipe as the phone equivalent of wheel scroll (up = next)
+      const delta = Math.abs(diff) >= Math.abs(diffY) ? diff : diffY;
+      if (Math.abs(delta) > 40) {
         isSwiping = true;
         lastSwipeTimestamp = Date.now();
-        if (diff > 0) goToSlide(currentIndex + 1);
+        if (delta > 0) goToSlide(currentIndex + 1);
         else goToSlide(currentIndex - 1);
       } else {
         isSwiping = false;
@@ -214,6 +235,12 @@ import { heroSlides } from '../data/heroSlides';
 
       // Protect native browser back/forward edge gestures (16px margin)
       if (e.clientX <= 16 || e.clientX >= window.innerWidth - 16) {
+        return;
+      }
+
+      // Intro slide: a click or tap anywhere starts the collection
+      if (currentIndex === 0) {
+        goToSlide(1);
         return;
       }
 
@@ -240,7 +267,9 @@ import { heroSlides } from '../data/heroSlides';
         const rect = container.getBoundingClientRect();
         const ratio = (e.clientX - rect.left) / rect.width;
 
-        if (ratio <= 0.20) {
+        if (currentIndex === 0) {
+          container.style.cursor = 'pointer';
+        } else if (ratio <= 0.20) {
           container.style.cursor = 'w-resize';
         } else if (ratio >= 0.80) {
           container.style.cursor = 'e-resize';

@@ -64,16 +64,40 @@ const srcset = isCritical ? undefined : `${slide.image.replace('.avif', '-1280.a
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.85s var(--ease-luxury), visibility 0.85s var(--ease-luxury);
+    transition: opacity 1s ease, visibility 0s linear 1s;
     pointer-events: none;
     overflow: hidden;
+    z-index: 0;
   }
 
+  /* Glenn Spiro crossfade: art shares one backdrop, so only the jewel dissolves */
   .hero-slide.is-active {
     opacity: 1;
     visibility: visible;
+    transition: opacity 1s ease, visibility 0s;
     pointer-events: auto;
     z-index: 2;
+  }
+
+  .hero-slide.is-leaving {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    z-index: 1;
+  }
+
+  /* Old copy clears early so two titles never overlap mid-fade */
+  .hero-slide.is-leaving .slide-content,
+  .hero-slide.is-leaving .slide-statement-container {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide,
+    .hero-slide.is-active {
+      transition: none;
+    }
   }
 
   .slide-artwork-wrapper {
@@ -91,12 +115,6 @@ const srcset = isCritical ? undefined : `${slide.image.replace('.avif', '-1280.a
     object-fit: cover;
     object-position: center center;
     user-select: none;
-    transform: scale(1.03);
-    transition: transform 1.25s var(--ease-luxury);
-  }
-
-  .hero-slide.is-active .slide-artwork {
-    transform: scale(1);
   }
 
   /* Centered brand statement (Slide 1) */
