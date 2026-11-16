@@ -5,27 +5,30 @@ interface Props {
   slide: HeroSlideData;
   index: number;
   isActive: boolean;
+  /** Jewel-free copy of the shared product backdrop, kept under every slide */
+  backdrop?: boolean;
 }
 
-const { slide, index, isActive } = Astro.props;
-const hasContent = Boolean(slide.title);
+const { slide, index, isActive, backdrop = false } = Astro.props;
+const hasContent = Boolean(slide.title) || backdrop;
 const hasStatement = Boolean(slide.statement);
 const isCritical = index === 0;
 // Slide 0 has no -1280 variant and is preloaded by exact URL in BaseLayout
 const srcset = isCritical ? undefined : `${slide.image.replace('.avif', '-1280.avif')} 1280w, ${slide.image} 2560w`;
 ---
 <article 
-  class={`hero-slide ${isActive ? 'is-active' : ''} ${hasContent ? 'is-product' : ''}`}
-  data-slide-index={index}
+  class={`hero-slide ${isActive ? 'is-active' : ''} ${hasContent ? 'is-product' : ''} ${backdrop ? 'is-backdrop' : ''}`}
+  data-slide-index={backdrop ? undefined : index}
   aria-hidden={!isActive}
 >
   <div class="slide-artwork-wrapper">
-    <img 
-      src={isCritical ? slide.image : undefined}
-      data-src={!isCritical ? slide.image : undefined}
-      data-srcset={srcset}
+    <img
+      src={isCritical || backdrop ? slide.image : undefined}
+      srcset={backdrop ? srcset : undefined}
+      data-src={!isCritical && !backdrop ? slide.image : undefined}
+      data-srcset={backdrop ? undefined : srcset}
       sizes="100vw"
-      alt={slide.alt} 
+      alt={backdrop ? '' : slide.alt}
       class="slide-artwork"
       loading={isCritical ? "eager" : "lazy"}
       fetchpriority={isCritical ? "high" : "low"}
@@ -39,7 +42,7 @@ const srcset = isCritical ? undefined : `${slide.image.replace('.avif', '-1280.a
     </div>
   )}
 
-  {hasContent && (
+  {hasContent && !backdrop && (
     <div class={`slide-content ${slide.position || 'lower-left'}`}>
       {slide.slug ? (
         <a href={`/the-edit/${slide.slug}`} class="product-link">
@@ -64,33 +67,26 @@ const srcset = isCritical ? undefined : `${slide.image.replace('.avif', '-1280.a
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 1s ease, visibility 0s linear 1s;
+    /* Glenn Spiro feel: old jewel fades out onto the unchanging backdrop... */
+    transition: opacity 0.6s ease, visibility 0s linear 0.6s;
     pointer-events: none;
     overflow: hidden;
     z-index: 0;
   }
 
-  /* Glenn Spiro crossfade: art shares one backdrop, so only the jewel dissolves */
   .hero-slide.is-active {
     opacity: 1;
     visibility: visible;
-    transition: opacity 1s ease, visibility 0s;
+    /* ...then the new one fades in, so two jewels or titles never overlap */
+    transition: opacity 0.7s ease 0.5s, visibility 0s;
     pointer-events: auto;
     z-index: 2;
   }
 
-  .hero-slide.is-leaving {
+  .hero-slide.is-backdrop {
     opacity: 1;
     visibility: visible;
     transition: none;
-    z-index: 1;
-  }
-
-  /* Old copy clears early so two titles never overlap mid-fade */
-  .hero-slide.is-leaving .slide-content,
-  .hero-slide.is-leaving .slide-statement-container {
-    opacity: 0;
-    transition: opacity 0.4s ease;
   }
 
   @media (prefers-reduced-motion: reduce) {

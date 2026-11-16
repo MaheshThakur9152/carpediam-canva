@@ -5,6 +5,12 @@ import { heroSlides } from '../data/heroSlides';
 ---
 <section class="hero-carousel-container is-first-slide" aria-roledescription="carousel" aria-label="High Jewelry Collection">
   <div class="slides-track" id="hero-carousel-track">
+    <HeroSlide
+      slide={{ id: 0, image: '/Homepage-bg.avif', alt: '' }}
+      index={-1}
+      isActive={false}
+      backdrop
+    />
     {heroSlides.map((slide, index) => (
       <HeroSlide 
         slide={slide} 
@@ -53,7 +59,7 @@ import { heroSlides } from '../data/heroSlides';
     if (!container || container.dataset.bound) return;
     container.dataset.bound = 'true';
 
-    const slides = container.querySelectorAll<HTMLElement>('.hero-slide');
+    const slides = container.querySelectorAll<HTMLElement>('.hero-slide:not(.is-backdrop)');
     const prevBtn = container.querySelector<HTMLButtonElement>('[data-carousel-prev]');
     const nextBtn = container.querySelector<HTMLButtonElement>('[data-carousel-next]');
 
@@ -61,8 +67,7 @@ import { heroSlides } from '../data/heroSlides';
 
     let currentIndex = 0;
     const total = slides.length;
-    const FADE_MS = 1000; // matches .hero-slide opacity transition
-    let leavingTimer: number | undefined;
+    const FADE_MS = 1200; // .hero-slide fade-in delay 0.5s + duration 0.7s
     let navToken = 0;
 
     function loadSlideImage(slideEl: HTMLElement) {
@@ -94,7 +99,7 @@ import { heroSlides } from '../data/heroSlides';
       if (previousIndex === currentIndex) return;
       const token = ++navToken;
 
-      // Fade only once the incoming art is decoded, else the old slide shows through an empty one
+      // Fade only once the incoming art is decoded, else it pops in mid-fade
       const incoming = slides[currentIndex];
       loadSlideImage(incoming);
       const img = incoming.querySelector<HTMLImageElement>('img');
@@ -103,18 +108,12 @@ import { heroSlides } from '../data/heroSlides';
       }
       if (token !== navToken) return;
 
-      // Crossfade: incoming fades in on top, outgoing stays opaque beneath, so the shared backdrop never dips
-      clearTimeout(leavingTimer);
-      const outgoing = [...slides].find((s) => s.classList.contains('is-active'));
+      // Outgoing fades to the shared backdrop, incoming fades in after (timing in HeroSlide CSS)
       slides.forEach((slide) => {
         const isActive = slide === incoming;
         slide.classList.toggle('is-active', isActive);
-        slide.classList.toggle('is-leaving', slide === outgoing && !isActive);
         slide.setAttribute('aria-hidden', (!isActive).toString());
       });
-      leavingTimer = window.setTimeout(() => {
-        outgoing?.classList.remove('is-leaving');
-      }, FADE_MS);
 
       // No arrows on the intro statement slide
       document.querySelector('.hero-carousel-container')?.classList.toggle('is-first-slide', currentIndex === 0);
