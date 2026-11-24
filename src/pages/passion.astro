@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Passion — CARPE DIAM BOMBAY"
+  showFooter={false}
+  headerVariant="light"
+  headerTransparent={true}
+>
+  <div class="passion-page">
+    <!-- Founders copy with coloured necklace sketch -->
+    <section class="passion-story">
+      <div class="passion-copy">
+        <p class="passion-eyebrow">Jewelry, with a point of view.</p>
+        <p class="passion-body">
+          Founded by <strong>Joohi and Rushabh</strong>, Carpe Diam brings together artistic vision and international jewelry expertise to create pieces that balance contemporary design with Indian sensibilities, thoughtful in form and precise in craftsmanship.
+        </p>
+      </div>
+      <img
+        src="/passion-necklace.avif"
+        alt="Carpe Diam diamond and pearl choker"
+        class="passion-necklace"
+        loading="eager"
+        decoding="async"
+      />
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .passion-page {
+    width: 100%;
+  }
+
+  /* Copy left, necklace box flush to the right edge (Figma "Atelier 2") */
+  .passion-story {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 560px;
+    background-color: #d9d3bf;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 42vw;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    padding-left: 11.5vw;
+    padding-top: 8vh;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Sized to the viewport so the copy keeps the mock's line breaks */
+  .passion-copy {
+    font-family: var(--font-primary, "Amiri", serif);
+    font-size: clamp(1rem, 1.75vw, 2.1rem);
+    max-width: 23em;
+    padding-right: 1.5rem;
+    color: #1a1a1a;
+  }
+
+  .passion-eyebrow,
+  .passion-body {
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: normal;
+  }
+
+  .passion-eyebrow {
+    font-style: italic;
+    margin: 0 0 1.1em;
+  }
+
+  .passion-body {
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .passion-body strong {
+    font-weight: 700;
+  }
+
+  /* Source is 1080x1920 with the choker in the middle band: crop to it and let the right side bleed */
+  .passion-necklace {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    object-position: 0 52%;
+    transform: translateX(4vw) scale(1.15);
+    transform-origin: left center;
+  }
+
+  @media (max-width: 900px) {
+    .passion-story {
+      height: auto;
+      min-height: 100dvh;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      align-content: center;
+      gap: 2rem;
+      padding: 6rem 0 3rem 1.5rem;
+    }
+
+    .passion-copy {
+      padding-right: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .passion-necklace {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

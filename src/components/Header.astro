@@ -47,6 +47,7 @@ const { variant = 'light', transparent = false } = Astro.props;
   <!-- Fullscreen Luxury Mobile Menu Overlay -->
   <div class="mobile-menu-overlay" id="mobile-menu-overlay" aria-hidden="true">
     <div class="mobile-menu-header">
+      <Logo variant="dark" class="mobile-menu-logo" />
       <button 
         type="button" 
         class="mobile-menu-close" 
@@ -61,22 +62,13 @@ const { variant = 'light', transparent = false } = Astro.props;
     </div>
 
     <nav class="mobile-nav-body">
-      <a href="/" class="mobile-brand-link" aria-label="Go to Home Screen">
-        <span class="mobile-menu-eyebrow">Carpe Diam Bombay</span>
-      </a>
-
       <ul class="mobile-nav-list">
-        <li>
-          <a href="/" class="mobile-nav-link">Home</a>
-        </li>
-        {navigationItems.map(item => (
-          <li>
+        {navigationItems.map((item, i) => (
+          <li style={`--i: ${i}`}>
             <a href={item.href} class="mobile-nav-link">{item.label}</a>
           </li>
         ))}
       </ul>
-
-      <p class="mobile-menu-footer-note">High Jewelry Atelier · Bombay</p>
     </nav>
   </div>
 </header>
@@ -281,8 +273,8 @@ const { variant = 'light', transparent = false } = Astro.props;
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background-color: rgba(6, 17, 15, 0.98);
-    backdrop-filter: blur(16px);
+    /* Cream painted-landscape backdrop, same art as The Edit */
+    background: #e9e1cc url('/the%20edit/background.avif') center / cover no-repeat;
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -300,16 +292,33 @@ const { variant = 'light', transparent = false } = Astro.props;
     pointer-events: auto;
   }
 
+  /* Mirrors the closed header: logo centered, control at the edge */
   .mobile-menu-header {
+    position: relative;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    min-height: 44px;
+    margin-top: calc(max(6dvh, env(safe-area-inset-top)) - max(1.2rem, env(safe-area-inset-top)));
+  }
+
+  .mobile-menu-header :global(.mobile-menu-logo .logo-svg) {
+    width: clamp(140px, 40vw, 170px);
+  }
+
+  .mobile-menu-header :global(.mobile-menu-logo .logo-bombay path) {
+    fill: #3a3a3a;
   }
 
   .mobile-menu-close {
     background: transparent;
     border: none;
-    color: #cbb27a;
+    position: absolute;
+    right: -0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1a1a1a;
     padding: 0.8rem;
     cursor: pointer;
     display: flex;
@@ -327,27 +336,13 @@ const { variant = 'light', transparent = false } = Astro.props;
     justify-content: center;
     text-align: center;
     gap: 2.2rem;
+    /* Keep links in the pale sky, clear of the painted hills */
+    padding-bottom: 14dvh;
     pointer-events: auto;
   }
 
-  .mobile-brand-link {
-    text-decoration: none;
-    display: inline-block;
-    padding: 0.5rem;
-    cursor: pointer;
-  }
 
-  .mobile-menu-eyebrow {
-    font-size: 0.85rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #cbb27a;
-    transition: opacity 0.3s ease;
-  }
 
-  .mobile-brand-link:hover .mobile-menu-eyebrow {
-    opacity: 0.8;
-  }
 
   .mobile-nav-list {
     list-style: none;
@@ -355,15 +350,29 @@ const { variant = 'light', transparent = false } = Astro.props;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    gap: clamp(1rem, 3.5vh, 1.8rem);
     align-items: center;
   }
 
+  /* Links rise in one after another each time the menu opens */
+  .mobile-nav-list li {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-menu-overlay.is-active .mobile-nav-list li {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.12s + var(--i) * 0.08s);
+  }
+
   .mobile-nav-link {
-    font-size: 1.8rem;
-    letter-spacing: 0.1em;
+    position: relative;
+    font-size: clamp(1.5rem, 7vw, 1.9rem);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #1a1a1a;
     text-decoration: none;
     transition: color 0.3s ease;
     display: inline-block;
@@ -372,15 +381,36 @@ const { variant = 'light', transparent = false } = Astro.props;
     cursor: pointer;
   }
 
-  .mobile-nav-link:hover {
-    color: #cbb27a;
+  .mobile-nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0.35rem;
+    width: 1.6rem;
+    height: 1px;
+    background-color: currentColor;
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.35s ease;
   }
 
-  .mobile-menu-footer-note {
-    font-size: 0.85rem;
-    color: rgba(203, 178, 122, 0.7);
-    letter-spacing: 0.08em;
+  .mobile-nav-link:hover,
+  .mobile-nav-link:focus-visible {
+    color: #6e5a30;
   }
+
+  .mobile-nav-link:hover::after,
+  .mobile-nav-link:focus-visible::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav-list li {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
 </style>
 
 <script>

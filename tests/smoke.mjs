@@ -31,8 +31,8 @@ async function smokeTest() {
     const loaderLogo = await page.$('.loader-logo');
     if (!loaderLogo) throw new Error('.loader-logo missing');
 
-    // Wait for loader to complete and dismiss (2.2s timer + 0.8s transition)
-    await page.waitForTimeout(3200);
+    // Wait for loader to complete and dismiss (3.7s timer + 0.65s transition)
+    await page.waitForTimeout(4600);
     const isHidden = await page.$eval('#site-loading-screen', el => {
       const style = window.getComputedStyle(el);
       return style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0';
@@ -57,19 +57,19 @@ async function smokeTest() {
 
     // Verify first card image loads
     const firstImg = await page.$eval('#the-edit-grid .the-edit-card img', el => el.getAttribute('src'));
-    if (!firstImg || !firstImg.includes('earing.avif')) throw new Error(`First card src unexpected: ${firstImg}`);
+    if (!firstImg || !firstImg.includes('001.avif')) throw new Error(`First card src unexpected: ${firstImg}`);
 
-    // Test 4: Navigate to /atelier
-    console.log('Testing /atelier tab preservation...');
-    await page.goto(`${BASE_URL}/atelier`, { waitUntil: 'domcontentloaded' });
-    const atelierTitle = await page.$eval('h1', el => el.textContent?.trim());
-    if (!atelierTitle || !atelierTitle.includes('Carpe Diam was born')) throw new Error('Atelier page failed to load');
+    // Test 4: Navigate to /passion
+    console.log('Testing /passion tab preservation...');
+    await page.goto(`${BASE_URL}/passion`, { waitUntil: 'domcontentloaded' });
+    const passionBody = await page.$eval('.passion-body', el => el.textContent?.trim());
+    if (!passionBody || !passionBody.includes('Joohi and Rushabh')) throw new Error('Passion page failed to load');
 
     // Test 5: Navigate to /contact
     console.log('Testing /contact tab preservation...');
     await page.goto(`${BASE_URL}/contact`, { waitUntil: 'domcontentloaded' });
     const contactTitle = await page.$eval('h1', el => el.textContent?.trim());
-    if (!contactTitle || !contactTitle.includes('From the first thought')) throw new Error('Contact page failed to load');
+    if (!contactTitle || !contactTitle.includes('Mumbai')) throw new Error('Contact page failed to load');
 
     // Test 6: Direct reload on /the-edit
     console.log('Testing direct reload on /the-edit...');

@@ -52,5 +52,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/atelier",
+      "destination": "/passion",
+      "permanent": true
+    }
   ]
 }

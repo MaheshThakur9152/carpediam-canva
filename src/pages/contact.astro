@@ -1,279 +1,160 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// TODO: replace with the studio's WhatsApp number (country code, digits only)
+const WHATSAPP_NUMBER = '910000000000';
+const wa = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 ---
 
-<BaseLayout 
+<BaseLayout
   title="Contact — CARPE DIAM BOMBAY"
-  description="From the first thought to the final detail, let's create something together. Private commissions and atelier inquiries."
+  description="Visit the Carpe Diam studio in Andheri East, Mumbai. Book an appointment or chat with us."
   headerVariant="light"
   headerTransparent={true}
   showFooter={false}
 >
   <div class="contact-page">
-    <div class="contact-container">
-      <!-- Left Statement -->
-      <div class="contact-left">
-        <h1 class="contact-statement">
-          From the first thought to the<br />
-          final detail, let's create<br />
-          something together.
-        </h1>
-      </div>
+    <section class="contact-info">
+      <h1 class="contact-city">Mumbai</h1>
+      <address class="contact-address">
+        506, 93 East Building, Mahakali Caves Rd,<br />
+        Shanti Nagar, Andheri East, Mumbai,<br />
+        Maharashtra 400093
+      </address>
 
-      <!-- Right Form -->
-      <div class="contact-right">
-        <!-- Static site: Formspree receives the POST and emails it. Replace YOUR_FORM_ID with the ID from formspree.io -->
-        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <input type="hidden" name="inquiry" id="inquiry-field" />
-          <!-- Row 1: Name Fields -->
-          <div class="form-row-two">
-            <div class="form-field">
-              <label for="first-name">FIRST NAME*</label>
-              <input type="text" id="first-name" name="firstName" required autocomplete="given-name" />
-            </div>
-            <div class="form-field">
-              <label for="last-name">LAST NAME*</label>
-              <input type="text" id="last-name" name="lastName" required autocomplete="family-name" />
-            </div>
-          </div>
+      <ul class="contact-actions">
+        <li>
+          <a class="contact-action" href={wa("Hello, I'd like to book an appointment.")} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+              <path d="M3.5 10h17M8 3v4M16 3v4" />
+            </svg>
+            Book an Appointment
+          </a>
+        </li>
+        <li>
+          <a class="contact-action" id="chat-link" href={wa('Hello, ')} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4.5 19.5l1.1-3.6A8.3 8.3 0 1 1 8.4 18.5z" />
+              <path d="M9.2 8.4c-.3 1.9 2.1 5 4.6 5.8.7.2 1.4-.2 1.7-.8l.2-.5-1.6-.9-.7.7c-.9-.3-2-1.4-2.4-2.3l.7-.7-.8-1.6-.6.1c-.6.1-1 .5-1.1 1.2z" />
+            </svg>
+            Chat with Us
+          </a>
+        </li>
+      </ul>
+    </section>
 
-          <!-- Row 2: Email -->
-          <div class="form-field">
-            <label for="email">EMAIL*</label>
-            <input type="email" id="email" name="email" required autocomplete="email" />
-          </div>
-
-          <!-- Row 3: Phone -->
-          <div class="form-field">
-            <label for="phone">PHONE*</label>
-            <input type="tel" id="phone" name="phone" required autocomplete="tel" />
-          </div>
-
-          <!-- Row 4: Message -->
-          <div class="form-field">
-            <label for="message">MESSAGE*</label>
-            <input type="text" id="message" name="message" required />
-          </div>
-
-          <!-- Row 5: Community Checkbox -->
-          <div class="form-checkbox-row">
-            <label class="checkbox-container">
-              <input type="checkbox" name="joinCommunity" id="join-community" checked />
-              <span class="custom-checkmark" aria-hidden="true"></span>
-              <span class="checkbox-label">Join our community</span>
-            </label>
-          </div>
-
-          <!-- Row 6: Submit Button -->
-          <div class="form-submit-row">
-            <button type="submit" class="submit-btn" id="submit-btn">
-              SUBMIT
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <img
+      src="/contact.avif"
+      alt="Carpe Diam studio: a necklace on a bust beside a jewelry tray"
+      class="contact-photo"
+      loading="eager"
+      decoding="async"
+    />
   </div>
 </BaseLayout>
 
 <script>
-  // Product page links here with ?inquiry=<slug>; pass it along with the enquiry
+  // Product pages link here with ?inquiry=<slug>; carry it into the WhatsApp message
   const inquiry = new URLSearchParams(location.search).get('inquiry');
-  const field = document.getElementById('inquiry-field') as HTMLInputElement | null;
-  if (inquiry && field) field.value = inquiry;
+  const chat = document.getElementById('chat-link') as HTMLAnchorElement | null;
+  if (inquiry && chat) {
+    const url = new URL(chat.href);
+    url.searchParams.set('text', `Hello, I'd like to know more about ${inquiry.replace(/-/g, ' ')}.`);
+    chat.href = url.toString();
+  }
 </script>
 
 <style>
   .contact-page {
     width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    background-image: url('/contact-bg.avif');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    padding: clamp(6.5rem, 14vh, 9rem) clamp(2rem, 6vw, 6.5rem) clamp(3.5rem, 8vh, 5.5rem);
-    box-sizing: border-box;
-    font-family: var(--font-primary, "Amiri", serif);
-  }
-
-  .contact-container {
-    max-width: 1260px;
-    width: 100%;
-    margin: 0 auto;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 560px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(3rem, 6vw, 6.5rem);
-    align-items: center;
-  }
-
-  /* Left Editorial Statement */
-  .contact-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .contact-statement {
     font-family: var(--font-primary, "Amiri", serif);
+    color: #ffffff;
+  }
+
+  .contact-info {
+    background: #d9d3bf url('/the%20edit/background.avif') left center / cover no-repeat;
+    padding: clamp(7rem, 31vh, 16rem) clamp(2rem, 5.2vw, 5.5rem) 0;
+    /* White copy sits on pale sky: a faint shadow keeps it legible */
+    text-shadow: 0 1px 10px rgba(60, 45, 20, 0.22);
+    box-sizing: border-box;
+  }
+
+  .contact-city {
+    font-family: inherit;
     font-weight: 400;
-    font-size: clamp(1.85rem, 2.7vw, 2.9rem);
-    line-height: 1.32;
+    font-size: clamp(1.6rem, 2.3vw, 2.6rem);
+    line-height: 1.1;
     letter-spacing: 0.01em;
-    color: #ffffff;
     text-transform: none;
+    color: inherit;
+    margin: 0 0 0.35rem;
+  }
+
+  .contact-address {
+    font-style: normal;
+    font-size: clamp(1rem, 1.45vw, 1.6rem);
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 clamp(2.5rem, 9vh, 5.5rem);
+  }
+
+  .contact-actions {
+    list-style: none;
     margin: 0;
-  }
-
-  /* Right Luxury Form */
-  .contact-right {
+    padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    max-width: 520px;
+    gap: clamp(0.4rem, 1.2vh, 0.8rem);
   }
 
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 2.6vh, 2.2rem);
-    width: 100%;
-  }
-
-  .form-row-two {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-  }
-
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .form-field label {
-    font-family: var(--font-primary, "Amiri", serif);
-    font-size: clamp(0.92rem, 1.05vw, 1.05rem);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 0.35rem;
-  }
-
-  .form-field input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.55);
-    color: #ffffff;
-    font-family: var(--font-primary, "Amiri", serif);
-    font-size: 1.1rem;
-    padding: 0.35rem 0 0.55rem;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-bottom-color 0.3s ease;
-  }
-
-  .form-field input:focus {
-    border-bottom-color: var(--color-gold, #c5a86c);
-  }
-
-  /* Custom Square Checkbox */
-  .form-checkbox-row {
-    margin-top: 0.3rem;
-  }
-
-  .checkbox-container {
+  .contact-action {
     display: inline-flex;
     align-items: center;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
+    gap: 0.6em;
+    font-size: clamp(1.15rem, 1.9vw, 2rem);
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
   }
 
-  .checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  .custom-checkmark {
-    height: 18px;
-    width: 18px;
-    background-color: #c7b89d;
-    display: inline-block;
+  .contact-action svg {
+    width: 1.05em;
+    height: 1.05em;
     flex-shrink: 0;
-    border-radius: 2px;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
   }
 
-  .checkbox-container input:not(:checked) ~ .custom-checkmark {
-    background-color: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+  .contact-action:hover {
+    opacity: 0.75;
   }
 
-  .checkbox-label {
-    font-family: var(--font-primary, "Amiri", serif);
-    font-size: clamp(0.95rem, 1.05vw, 1.08rem);
-    color: #ffffff;
-    opacity: 0.95;
-    margin-left: 0.9rem;
-    letter-spacing: 0.02em;
+  .contact-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
-  /* Submit Button */
-  .form-submit-row {
-    margin-top: 0.8rem;
-  }
-
-  .submit-btn {
-    background: transparent;
-    border: none;
-    padding: 0.4rem 0;
-    font-family: var(--font-primary, "Amiri", serif);
-    font-size: clamp(1.05rem, 1.2vw, 1.22rem);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #ffffff;
-    cursor: pointer;
-    transition: color 0.3s ease, opacity 0.3s ease;
-  }
-
-  .submit-btn:hover {
-    color: var(--color-gold, #c5a86c);
-  }
-
-  /* Responsive Behavior */
   @media (max-width: 900px) {
     .contact-page {
-      padding: 6.5rem 1.5rem 4rem;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-
-    .contact-container {
+      height: auto;
       grid-template-columns: 1fr;
-      gap: 2.8rem;
     }
 
-    .contact-statement {
-      font-size: 1.65rem;
-      line-height: 1.3;
+    .contact-info {
+      min-height: 70dvh;
+      padding: 9.5rem 1.5rem 3.5rem;
     }
 
-    .contact-right {
-      max-width: 100%;
-    }
-
-    .form-row-two {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+    .contact-photo {
+      height: auto;
+      aspect-ratio: 4 / 5;
     }
   }
 </style>
