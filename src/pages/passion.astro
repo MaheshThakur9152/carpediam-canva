@@ -43,6 +43,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     grid-template-rows: minmax(0, 1fr);
     align-items: center;
     padding-left: 11.5vw;
+    padding-right: 4vw;
     padding-top: 8vh;
     box-sizing: border-box;
     overflow: hidden;
@@ -78,14 +79,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 700;
   }
 
-  /* Source is 1080x1920 with the choker in the middle band: crop to it and let the right side bleed */
+  /* Source is 1080x1920 with the choker in the middle band: crop to that band, keep full width so nothing is cut */
   .passion-necklace {
     width: 100%;
-    height: 70%;
+    height: auto;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
-    object-position: 0 52%;
-    transform: translateX(4vw) scale(1.15);
-    transform-origin: left center;
+    object-position: 50% 52%;
   }
 
   @media (max-width: 900px) {
@@ -96,7 +96,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       grid-template-rows: auto auto;
       align-content: center;
       gap: 2rem;
-      padding: 6rem 0 3rem 1.5rem;
+      padding: 6rem 1.5rem 3rem;
     }
 
     .passion-copy {
@@ -104,9 +104,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       font-size: 1.1rem;
     }
 
-    .passion-necklace {
-      height: auto;
-      aspect-ratio: 4 / 3;
+    /* White header logo vanishes on the beige mobile background */
+    :global(.site-header .mobile-header-logo.light .logo-carpediam path) {
+      fill: #111111 !important;
+    }
+
+    :global(.site-header .mobile-header-logo.light .logo-bombay path) {
+      fill: #666666 !important;
     }
   }
 </style>

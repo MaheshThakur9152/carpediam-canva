@@ -46,6 +46,22 @@ const gridItems = [
     title: 'Emerald Three-Stone Ring',
     image: '/the edit/009.avif',
     alt: 'Emerald cut emerald ring with diamond side stones in a Carpe Diam box'
+  },
+  {
+    title: 'Polki Emerald Necklace',
+    image: '/the edit/010.avif',
+    alt: 'Polki diamond necklace with carved emerald drops on a blush velvet bust'
+  },
+  {
+    title: 'Bridal Polki Emerald Necklace',
+    image: '/the edit/011.avif',
+    alt: 'Bride in an ivory veil wearing a polki and emerald necklace with matching earrings'
+  },
+  {
+    title: 'Diamond Emerald Necklace',
+    image: '/the edit/012.avif',
+    alt: 'Bride in a beaded silver gown wearing a diamond necklace with emerald drops',
+    position: 'center 30%'
   }
 ];
 ---
@@ -67,7 +83,8 @@ const gridItems = [
               <img 
                 src={item.image} 
                 alt={item.alt} 
-                class="the-edit-img" 
+                class="the-edit-img"
+                style={item.position && `object-position: ${item.position}`}
                 loading={index < 3 ? 'eager' : 'lazy'}
                 decoding="async"
               />

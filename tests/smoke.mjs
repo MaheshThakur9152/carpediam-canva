@@ -53,7 +53,7 @@ async function smokeTest() {
     if (!editGrid) throw new Error('#the-edit-grid element missing on /the-edit');
 
     const cards = await page.$$('#the-edit-grid .the-edit-card:not(.is-clone)');
-    if (cards.length !== 9) throw new Error(`Expected 9 edit cards, found: ${cards.length}`);
+    if (cards.length !== 12) throw new Error(`Expected 12 edit cards, found: ${cards.length}`);
 
     // Verify first card image loads
     const firstImg = await page.$eval('#the-edit-grid .the-edit-card img', el => el.getAttribute('src'));
@@ -77,7 +77,7 @@ async function smokeTest() {
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(500);
     const reloadedCards = await page.$$('#the-edit-grid .the-edit-card:not(.is-clone)');
-    if (reloadedCards.length !== 9) throw new Error('Failed to reload /the-edit');
+    if (reloadedCards.length !== 12) throw new Error('Failed to reload /the-edit');
 
     if (errors.length > 0) throw new Error(`Console errors: ${errors.join(' | ')}`);
     console.log('✓ All smoke tests passed successfully!');
