@@ -16,6 +16,8 @@ body {
   background-color: var(--color-bg-dark);
   color: var(--color-text-white);
   min-height: 100vh;
+  /* Android Chrome: 100vh is the bar-hidden height, so pages scrolled into an empty strip */
+  min-height: 100dvh;
   overflow-x: hidden;
   position: relative;
 }

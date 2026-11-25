@@ -72,6 +72,8 @@ const {
 <style>
   main {
     min-height: 100vh;
+    /* Match the dvh page sections so Android doesn't scroll into an empty strip */
+    min-height: 100dvh;
   }
 
   :global(html.is-home-page),
