@@ -145,10 +145,10 @@ const wa = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIC
   }
 
   @media (max-width: 900px) {
-    /* One screen, no scroll: teal info on top, photo fills the rest */
+    /* One screen, no scroll: teal info sized to its copy, photo fills the rest */
     .contact-page {
       grid-template-columns: 1fr;
-      grid-template-rows: minmax(0, 1fr) 36dvh;
+      grid-template-rows: auto minmax(0, 1fr);
       overflow: hidden;
     }
 
@@ -157,7 +157,7 @@ const wa = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIC
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 6.5rem 1.5rem 1.75rem;
+      padding: clamp(7.25rem, 17dvh, 10rem) 1.5rem 2rem;
     }
 
     .contact-city {
@@ -187,14 +187,39 @@ const wa = (text: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIC
       font-size: 1.25rem;
     }
 
+    /* Keep the bust and necklace in frame when the photo gets short */
     .contact-photo {
       min-height: 0;
+      object-position: 35% 62%;
     }
 
     /* Transparent headers force dark menu lines; they vanish on the teal panel */
     :global(.site-header.always-transparent .menu-line) {
       background-color: #ffffff !important;
       filter: none !important;
+    }
+  }
+
+  /* Short phones (most Android screens with browser bars): tighter type so the photo keeps room */
+  @media (max-width: 900px) and (max-height: 740px) {
+    .contact-info {
+      padding: 7.5rem 1.5rem 1.5rem;
+    }
+
+    .contact-city {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-address {
+      font-size: 0.98rem;
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-action {
+      padding: 0.75rem 0;
+      font-size: 1.15rem;
     }
   }
 </style>
